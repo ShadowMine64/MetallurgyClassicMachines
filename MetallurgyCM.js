@@ -30,6 +30,7 @@ var totalpowCopper = 0;
 var totalpowBronze = 0;
 var totalpowSilver = 0;
 var totalpowSteel = 0;
+var adamantineAbPower = 0;
 
 //Brass Chest
 Inventory.defineBlock(235, "Brass Chest", [["brass_top", 0], ["brass_top", 0], ["brass_front", 0], ["brass_side", 0], ["brass_side", 0], ["brass_side", 0]], 54, false, 0, 54, true);
@@ -64,7 +65,14 @@ Block.setLightOpacity(205, .0001);
 Block.defineBlock(245, "Machine Frame", ["machine", 0], 4, false, 0);
 Block.setLightOpacity(245, .0001);
 
+Block.defineBlock(206, "mcm_abstractor", [["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front", 0], ["abstractor_adamantine_back", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]], 4, false, 0);
+Block.setLightOpacity(206, .00001);
+
 var itemHold;
+
+Player.giveXP = function(xp){
+	Player.setExp(Player.getExp() + xp);
+}
 
 metallurgyCM.newLevel(){
 	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;
@@ -75,7 +83,7 @@ metallurgyCM.newLevel(){
            initRecipes();
        		initDusts = true;
 	}
-	ModPE.readData(totalpowStone);
+	ModPE.readData(totalpowStone, totalpowCopper, totalpowBronze, totalpowSilver, totalpowSteel);
 }
 
 //Add fuel here
@@ -150,7 +158,157 @@ metallurgyCM.useItem(x, y, z, itemId, blockId, side, itemDat, blockDat){
 		itemHold = itemId;
 		removeSteelPower(itemId);
 	}
+	if(blockId == 206){
+		switch(blockDat){
+			case 0:
+			itemHold = itemId;
+				adamantineAbRemove(itemId);
+				switch(itemId){
+					case 263:
+						adamantineAbPowAdd(263, 300, 0);
+						break;
+					case 325:
+						if(itemDat == 10){
+							adamantineAbPowAdd(327, 700, 10);
+						}
+						break;
+					case 377:
+						adamantineAbPowAdd(377, 550, 0);
+						break;
+				}
+				break;
+		}
+	}
 }
+
+/*
+0: 25
+1: 150
+2: 175
+3: 250
+4: 475
+5: 600
+6: 800
+*/
+
+function adamantineAbRemove(item){
+	switch(item){
+		case 1900:
+			adamantineAddTierRecipe(1900, 3);
+			break;
+		case 1901:
+			adamantineAddTierRecipe(1901, 2);
+			break;
+		case 1902:
+			adamantineAddTierRecipe(1902, 1);
+			break;
+		case 1903:
+			adamantineAddTierRecipe(1903, 2);
+			break;
+		case 1904:
+			adamantineAddTierRecipe(1904, 3);
+			break;
+		case 1905:
+			adamantineAddTierRecipe(1905, 2);
+			break;
+		case 1906:
+			adamantineAddTierRecipe(1906, 3);
+			break;
+		case 1907:
+			adamantineAddTierRecipe(1907, 1);
+			break;
+		case 1908:
+			adamantineAddTierRecipe(1908, 6);
+			break;
+		case 1909:
+			adamantineAddTierRecipe(1909, 4);
+			break;
+		case 1910:
+			adamantineAddTierRecipe(1910, 6);
+			break;
+		case 1911:
+			adamantineAddTierRecipe(1911, 2);
+			break;
+	}
+}
+
+function adamantineAddTierRecipe(item, tier){
+	switch(tier){
+		case 0:
+			adamantineAbPower(item, 50, 25);
+			break;
+		case 1:
+			adamantineAbPower(item, 90, 150);
+			break;
+		case 2:
+			adamantineAbPower(item, 150, 175);
+			break;
+		case 3:
+			adamantineAbPower(item, 200, 250);
+			break;
+		case 4:
+			adamantineAbPower(item, 350, 475);
+			break;
+		case 5:
+			adamantineAbPower(item, 500, 600);
+			break;
+		case 6:
+			adamantineAbPower(item, 650, 800);
+			break;
+	}
+}
+
+function adamantineAbPower(item, minPower, xp){
+	if(itemHold == item && adamantineAbPower >= minPower){
+		adamantineAbBurn(item, 0, xp, minPower);
+	}
+}
+
+function adamantineAbPowAdd(item, power, dat){
+	adamantineAbstract(power);
+	Player.addItemInventory(item, -1, dat);
+}
+
+function adamantineAbBurn(item, dat, xp, power){
+	adamantineAbstract(-power);
+	Player.addItemInventory(item, -1, dat);
+	for(var i = 60; i >= 0; i--){
+		if(i == 0){
+			Player.giveXP(xp);
+		}
+	}
+}
+
+function adamantineAbstract(power){
+	adamantineAbPower += (power);
+	ModPE.showTipMessage(ChatColor.RED + "Power:" + adamantineAbPower + "Fuel");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var SC = {};
 SC.addRecipe = function (item, dat, minPower, out){
@@ -494,7 +652,7 @@ function useItem(x,y,z,itemID,blockID,side,itemDat,blockDat){BetterStorage.useIt
 function destroyBlock(x,y,z,side){BetterStorage.destroyBlock(x,y,z,side);metallurgyCM.destroyBlock(x, y, z, side);}
 
 function leaveGame(){
-	ModPE.saveData(totalpowStone);
+	ModPE.saveData(totalpowStone, totalpowCopper, totalpowBronze, totalpowSilver, totalpowSteel);
 }
 
 //LEAVE EVERYTHING BELOW THIS LINE
