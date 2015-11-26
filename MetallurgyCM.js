@@ -75,11 +75,11 @@ Block.setShape(195, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
 
 //Crushers
 Block.defineBlock(196, "mcm_crusher", [["crusher_stone_top",0], ["crusher_stone_top", 0], ["crusher_stone_front", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0],
-									   ["crusher_copper_top",0], ["crusher_copper_top", 0], ["crusher_copper_front", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0],
-									   ["crusher_bronze_top",0], ["crusher_bronze_top", 0], ["crusher_bronze_front", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0],
-									   ["crusher_iron_top",0], ["crusher_iron_top", 0], ["crusher_iron_front", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0],
-									   ["crusher_steel_top",0], ["crusher_steel_top", 0], ["crusher_steel_front", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0]
-									   ], 4, false, 0);
+	["crusher_copper_top",0], ["crusher_copper_top", 0], ["crusher_copper_front", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0],
+	["crusher_bronze_top",0], ["crusher_bronze_top", 0], ["crusher_bronze_front", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0],
+	["crusher_iron_top",0], ["crusher_iron_top", 0], ["crusher_iron_front", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0],
+	["crusher_steel_top",0], ["crusher_steel_top", 0], ["crusher_steel_front", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0]
+], 4, false, 0);
 Block.setLightOpacity(196, .0001);
 
 //What every machine will need :v
@@ -435,20 +435,37 @@ metallurgyCM.crusher.stone = function(x, y, z, itemId, itemDat){
 
 metallurgyCM.crusher.recipeStoneHook = function(x, y, z, item, dat){
 	switch(item){
-
+		case 1908:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1908, 0, 875, 2100, 0);//Adamantine
+			break;
+		case 1900:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1900, 0, 500, 2101, 0);
+			break;
+		case 1909:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1909, 0, 625, 2102, 0);
+			break;
+		case 1910:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1910, 0, 875, 2103, 0);
+			break;
+		case 1911:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1911, 0, 375, 2104, 0);
 	}
 }
 
 metallurgyCM.crusher.stoneTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
 	Player.removeItem(item, dat, 1);
-	crusher.removeStonePower(x, y, z, 125)
-	for(var i = 160; i <= 0; i--){
-	Level.playSound(x, y, z, "crusher.run", 100, 25);
-		if(i == 0){
-			Level.dropItem(x, y + .25, z, .2, out, 2, outDat);
-			Level.playSound(x, y, z, "machine.ding", 100, 25);
+	if(crusher.getStonePower() >= powerRemove){
+		crusher.removeStonePower(x, y, z, 125)
+		for(var i = 180; i <= 0; i--){
+			Level.playSound(x, y, z, "crusher.run", 100, 25);
+			if(i == 0){
+				Level.dropItem(x, y + .25, z, .2, out, 2, outDat);
+				Level.playSound(x, y, z, "machine.ding", 100, 25);
+			}
 		}
-	}	
+	} else {
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!")
+	}
 }
 
 metallurgyCM.loadStoneCrushers = function(){
@@ -496,6 +513,14 @@ crusher.removeStonePower = function(x, y, z, powerAmount){
 	}
 }
 
+crusher.getStonePower = function(x, y, z){
+	for(var i in crushers.stone){
+		var c = crushers.stone[i];
+		if(c.x == x && c.y == y && c.z == z){
+			return c.power;
+		}
+	}
+}
 
 metallurgyCM.crusher.copper = function(x, y, z, itemId, itemDat, blockDat){
 
@@ -1129,4 +1154,4 @@ function writeFileFromByteArray(byteArray,path){
 	var fontStream=new java.io.FileOutputStream(fontFile);
 	fontStream.write(byteArray);
 	fontStream.close();
-}
+	}
