@@ -24,636 +24,174 @@ ModPE.langEdit("item.backpackBrown.name","Backpack");
 //
 //
 
-//Variables for machines
-var totalpowStone = 0;
-var totalpowCopper = 0;
-var totalpowBronze = 0;
-var totalpowSilver = 0;
-var totalpowSteel = 0;
-var adamantineAbPower = 0;
 
 //Brass Chest
-Inventory.defineBlock(235, "Brass Chest", [["brass_top", 0], ["brass_top", 0], ["brass_front", 0], ["brass_side", 0], ["brass_side", 0], ["brass_side", 0]], 54, false, 0, 54, true);
-Block.setShape(235, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
+Inventory.defineBlock(190, "Brass Chest", [["brass_top", 0], ["brass_top", 0], ["brass_front", 0], ["brass_side", 0], ["brass_side", 0], ["brass_side", 0]], 54, false, 0, 54, true);
+Block.setShape(190, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
 
 //Electrum Chest
-Inventory.defineBlock(236, "Electrum Chest", [["electrum_top", 0], ["electrum_top", 0], ["electrum_front", 0], ["electrum_side", 0], ["electrum_side", 0], ["electrum_side", 0]], 54, false, 0, 90, true);
-Block.setShape(236, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
+Inventory.defineBlock(191, "Electrum Chest", [["electrum_top", 0], ["electrum_top", 0], ["electrum_front", 0], ["electrum_side", 0], ["electrum_side", 0], ["electrum_side", 0]], 54, false, 0, 90, true);
+Block.setShape(191, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
 
 //Gold Chest
-Inventory.defineBlock(237, "Gold Chest", [["gold_top", 0], ["gold_top", 0], ["gold_front", 0], ["gold_side", 0], ["gold_side", 0], ["gold_side", 0]], 54, false, 0, 81, true);
-Block.setShape(237, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
+Inventory.defineBlock(192, "Gold Chest", [["gold_top", 0], ["gold_top", 0], ["gold_front", 0], ["gold_side", 0], ["gold_side", 0], ["gold_side", 0]], 54, false, 0, 81, true);
+Block.setShape(192, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
 
 //Platinum Chest
-Inventory.defineBlock(238, "Platinum Chest", [["platinum_top", 0], ["platinum_top", 0], ["platinum_front", 0], ["platinum_side", 0], ["platinum_side", 0], ["platinum_side", 0]], 54, false, 0, 108, true);
-Block.setShape(238, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
+Inventory.defineBlock(193, "Platinum Chest", [["platinum_top", 0], ["platinum_top", 0], ["platinum_front", 0], ["platinum_side", 0], ["platinum_side", 0], ["platinum_side", 0]], 54, false, 0, 108, true);
+Block.setShape(194, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
 
-//Silver Chest
-Inventory.defineBlock(239, "Silver Chest", [["silver_top", 0], ["silver_top", 0], ["silver_front", 0], ["silver_side", 0], ["silver_side", 0], ["silver_side", 0]], 54, false, 0, 72, true);
-Block.setShape(239, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
+//silver Chest
+Inventory.defineBlock(195, "silver Chest", [["silver_top", 0], ["silver_top", 0], ["silver_front", 0], ["silver_side", 0], ["silver_side", 0], ["silver_side", 0]], 54, false, 0, 72, true);
+Block.setShape(195, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
 
 //Crushers
-Block.defineBlock(205, "mcm_crusher", [["crusher_stone_top",0], ["crusher_stone_top", 0], ["crusher_stone_front", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0],
+Block.defineBlock(196, "mcm_crusher", [["crusher_stone_top",0], ["crusher_stone_top", 0], ["crusher_stone_front", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0],
 									   ["crusher_copper_top",0], ["crusher_copper_top", 0], ["crusher_copper_front", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0],
 									   ["crusher_bronze_top",0], ["crusher_bronze_top", 0], ["crusher_bronze_front", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0],
-									   ["crusher_silver_top",0], ["crusher_silver_top", 0], ["crusher_silver_front", 0], ["crusher_silver_side", 0], ["crusher_silver_side", 0], ["crusher_silver_side", 0],
+									   ["crusher_iron_top",0], ["crusher_iron_top", 0], ["crusher_iron_front", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0],
 									   ["crusher_steel_top",0], ["crusher_steel_top", 0], ["crusher_steel_front", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0]
 									   ], 4, false, 0);
-Block.setLightOpacity(205, .0001);
+Block.setLightOpacity(196, .0001);
 
 //What every machine will need :v
 Block.defineBlock(245, "Machine Frame", ["machine", 0], 4, false, 0);
 Block.setLightOpacity(245, .0001);
 
-Block.defineBlock(206, "mcm_abstractor", [["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front", 0], ["abstractor_adamantine_back", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]], 4, false, 0);
-Block.setLightOpacity(206, .00001);
+Block.defineBlock(197, "mcm_abstractor", [
+	["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]
+	["abstractor_atlarus_top", 0], ["abstractor_atlarus_bottom", 0], ["abstractor_atlarus_front", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], 
+	["abstractor_black_steel_top", 0], ["abstractor_black_steel_bottom", 0], ["abstractor_black_steel_front", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], 
+	["abstractor_deep_iron_top", 0], ["abstractor_deep_iron_bottom", 0], ["abstractor_deep_iron_front", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], 
+	["abstractor_haderoth_top", 0], ["abstractor_haderoth_bottom", 0], ["abstractor_haderoth_front", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], 
+	["abstractor_mithril_top", 0], ["abstractor_mithril_bottom", 0], ["abstractor_mithril_front", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], 
+	["abstractor_orichalcum_top", 0], ["abstractor_orichalcum_bottom", 0], ["abstractor_orichalcum_front", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], 
+	["abstractor_oureclase_top", 0], ["abstractor_oureclase_bottom", 0], ["abstractor_oureclase_front", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], 
+	["abstractor_prometheum_top", 0], ["abstractor_prometheum_bottom", 0], ["abstractor_prometheum_front", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], 
+	["abstractor_tartarite_top", 0], ["abstractor_tartarite_bottom", 0], ["abstractor_tartarite_front", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0]
+], 4, false, 0);
+Block.defineBlock(198, "mcm_abstractor", [
+	["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front_on", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]
+	["abstractor_atlarus_top", 0], ["abstractor_atlarus_bottom", 0], ["abstractor_atlarus_front_on", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], 
+	["abstractor_black_steel_top", 0], ["abstractor_black_steel_bottom", 0], ["abstractor_black_steel_front_on", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], 
+	["abstractor_deep_iron_top", 0], ["abstractor_deep_iron_bottom", 0], ["abstractor_deep_iron_front_on", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], 
+	["abstractor_haderoth_top", 0], ["abstractor_haderoth_bottom", 0], ["abstractor_haderoth_front_on", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], 
+	["abstractor_mithril_top", 0], ["abstractor_mithril_bottom", 0], ["abstractor_mithril_front_on", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], 
+	["abstractor_orichalcum_top", 0], ["abstractor_orichalcum_bottom", 0], ["abstractor_orichalcum_front_on", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], 
+	["abstractor_oureclase_top", 0], ["abstractor_oureclase_bottom", 0], ["abstractor_oureclase_front_on", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], 
+	["abstractor_prometheum_top", 0], ["abstractor_prometheum_bottom", 0], ["abstractor_prometheum_front_on", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], 
+	["abstractor_tartarite_top", 0], ["abstractor_tartarite_bottom", 0], ["abstractor_tartarite_front_on", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0]
+], 4, false, 0);
+Block.setLightOpacity(197, .00001);
+Block.setLightOpacity(198, .00001);
 
-var itemHold;
-
+metallurgyCM = {};
+metallurgyCM.crusher = {};
+metallurgyCM.abstractor = {};
+metallurgyCM.smelter = {};
+metallurgyCM.furnace ={};
 Player.giveXP = function(xp){
 	Player.setExp(Player.getExp() + xp);
 }
-
-metallurgyCM.newLevel(){
-	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;
-    for(var i = 0; i < scripts.size(); i++) {
-        var script = scripts.get(i);
-        var scope = script.scope;
-        if(org.mozilla.javascript.ScriptableObject.hasProperty(scope, "Metallurgy") && org.mozilla.javascript.ScriptableObject.hasProperty(scope, "BetterStorage"))
-           initRecipes();
-       		initDusts = true;
-	}
-	ModPE.readData(totalpowStone, totalpowCopper, totalpowBronze, totalpowSilver, totalpowSteel);
+metallurgyCM.newLevel = function(){
+	var scripts = net.zhuoweizhang.mcpelauncher.ScriptManager.scripts;for(var i = 0; i < scripts.size(); i++){var script = scripts.get(i);var scope = script.scope;if(org.mozilla.javascript.ScriptableObject.hasProperty(scope, "Metallurgy"))initRecipes();initDusts = true;}
+	
 }
 
-//Add fuel here
-metallurgyCM.useItem(x, y, z, itemId, blockId, side, itemDat, blockDat){
-	if(blockId == 205 && blockDat == 0){
-		switch(itemId){
-			case 263:
-				addStonePow(263, 300, 0);
-				break;
-			case 325:
-				if(itemDat == 10){
-					addStonePow(325, 700, 10);
-				}
-				break;
-			case 377:
-				addStonePow(377, 550, 0);
-				break;
-		}
-		itemHold = itemId;
-		//Separate hook
-		removepowStone(itemId);
-	}
-	if(blockId == 205 && blockDat == 1){
-		switch(itemId){
-			case 263:
-				addCopperPower(263, 450, 0);
-				break;
-			case 325:
-				if(itemDat == 10){
-					addCopperPower(325, 1050, 10);
-				}
-				break;
-			case 377:
-				addCopperPower(377, 825, 0);
-				break;
-		}
+var crushers = {};
+crushers.stone = [];
+crushers.copper = [];
+crushers.bronze = [];
+crushers.iron = [];
+crushers.steel = [];
+var abstractors = [];
+abstractors.adamantine = [];
+abstractors.atlarus = [];
+abstractors.blackSteel = [];
+abstractors.deepIron = [];
+abstractors.haderoth = [];
+abstractors.mithril = [];
+abstractors.orichalcum = [];
+abstractors.oureclase = [];
+abstractors.prometheum = [];
+abstractors.tartarite = [];
+var furnaces = [];
+furnaces.bronze = [];
+furnaces.iron = [];
+furnaces.steel = [];
+var smelters = [];
+smelters.ignatius = [];
+smelters.inolashite =[];
+smelters.kalendrite = [];
+smelters.sanguinite = [];
+smelters.shadowIron = [];
+smelters.shadowSteel = [];
+smelters.vulcanite = [];
+smelters.vyroxeres = [];
 
-		itemHold = itemId;
-		removeCopperPow(itemId);
+metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDat){
+	switch(blockId){
+		case 196:
+			switch(blockDat){
+				case 0:
+					metallurgyCM.crusher.stone(x, y, z, itemId, blockId, side, itemDat, blockDat);
+					break;
+				case 1:
+					metallurgyCM.crusher.copper(x, y, z, itemId, blockId, side, itemDat, blockDat);
+					break;
+				case 2:
+					metallurgyCM.crusher.bronze(x, y, z, itemId, blockId, side, itemDat, blockDat);
+					break;
+				case 3:
+					metallurgyCM.crusher.iron(x, y, z, itemId, blockId, side, itemDat, blockDat);
+					break;
+				case 4:
+					metallurgyCM.crusher.steel(x, y, z, itemId, blockId, side, itemDat, blockDat);
+					break;
+			}
+		break;
 	}
-	if(blockId == 205 && blockDat == 2){
-		if(itemId == 263){
-			addBronzePower(263, 525, 0);
-		}
-		if(itemId == 325 && itemDat == 10){
-			addBronzePower(325, 1225, 10);
-		}
-		if(itemId == 377){
-			addBronzePower(377, 963, 0);
-		}
-		itemHold == itemId;
-		removeBronzePow(itemId);
-	}
-	if(blockId == 205 && blockDat == 3){
-		if(itemId == 263){
-			addSilverPower(263, 600, 0);
-		}
-		if(itemId == 325 && itemDat == 10){
-			addSilverPower(325, 1400, 10);
-		}
-		if(itemId == 377){
-			addSilverPower(377, 1100, 0);
-		}
-
-		itemHold = itemId;
-		removeSilverPower(itemId)
-	}
-	if(blockId == 205 && blockDat == 4){
-		addSteelPower(263, 750, 0);
-		addSteelPower(325, 1750, 10);
-		addSteelPower(377, 1375, 0);
-		itemHold = itemId;
-		removeSteelPower(itemId);
-	}
-	if(blockId == 206){
-		switch(blockDat){
-			case 0:
-			itemHold = itemId;
-				adamantineAbRemove(itemId);
-				switch(itemId){
-					case 263:
-						adamantineAbPowAdd(263, 300, 0);
-						break;
-					case 325:
-						if(itemDat == 10){
-							adamantineAbPowAdd(327, 700, 10);
-						}
-						break;
-					case 377:
-						adamantineAbPowAdd(377, 550, 0);
-						break;
-				}
-				break;
-		}
+	switch(itemId){
+		case 196:
+			switch(itemDat){
+				case 0:
+					crushers.stone.push({x:x, y:y +	1, z:z});
+					break;
+				case 1:
+					crushers.copper.push({x:x, y:y + 1, z:z});
+					break;
+				case 2:
+					crushers.bronze.push({x:x, y:y + 1, z:z});
+					break;
+				case 3:
+					crushers.iron.push({x:x, y:y + 1, z:z});
+					break;
+				case 4:
+					crushers.steel.push({x:x, y:y + 1, z:z});
+					break;
+			}
+		break;
 	}
 }
 
-/*
-0: 25
-1: 150
-2: 175
-3: 250
-4: 475
-5: 600
-6: 800
-*/
+metallurgyCM.modTick = function(){
 
-function adamantineAbRemove(item){
-	switch(item){
-		case 1900:
-			adamantineAddTierRecipe(1900, 3);
-			break;
-		case 1901:
-			adamantineAddTierRecipe(1901, 2);
-			break;
-		case 1902:
-			adamantineAddTierRecipe(1902, 1);
-			break;
-		case 1903:
-			adamantineAddTierRecipe(1903, 2);
-			break;
-		case 1904:
-			adamantineAddTierRecipe(1904, 3);
-			break;
-		case 1905:
-			adamantineAddTierRecipe(1905, 2);
-			break;
-		case 1906:
-			adamantineAddTierRecipe(1906, 3);
-			break;
-		case 1907:
-			adamantineAddTierRecipe(1907, 1);
-			break;
-		case 1908:
-			adamantineAddTierRecipe(1908, 6);
-			break;
-		case 1909:
-			adamantineAddTierRecipe(1909, 4);
-			break;
-		case 1910:
-			adamantineAddTierRecipe(1910, 6);
-			break;
-		case 1911:
-			adamantineAddTierRecipe(1911, 2);
-			break;
-	}
 }
 
-function adamantineAddTierRecipe(item, tier){
-	switch(tier){
-		case 0:
-			adamantineAbPower(item, 50, 25);
-			break;
-		case 1:
-			adamantineAbPower(item, 90, 150);
-			break;
-		case 2:
-			adamantineAbPower(item, 150, 175);
-			break;
-		case 3:
-			adamantineAbPower(item, 200, 250);
-			break;
-		case 4:
-			adamantineAbPower(item, 350, 475);
-			break;
-		case 5:
-			adamantineAbPower(item, 500, 600);
-			break;
-		case 6:
-			adamantineAbPower(item, 650, 800);
-			break;
-	}
+metallurgyCM.destroyBlock = function(x, y, z, side){
+
 }
 
-function adamantineAbPower(item, minPower, xp){
-	if(itemHold == item && adamantineAbPower >= minPower){
-		adamantineAbBurn(item, 0, xp, minPower);
-	}
+metallurgyCM.leaveGame = function(){
+
 }
 
-function adamantineAbPowAdd(item, power, dat){
-	adamantineAbstract(power);
-	Player.addItemInventory(item, -1, dat);
-}
-
-function adamantineAbBurn(item, dat, xp, power){
-	adamantineAbstract(-power);
-	Player.addItemInventory(item, -1, dat);
-	for(var i = 60; i >= 0; i--){
-		if(i == 0){
-			Player.giveXP(xp);
-		}
-	}
-}
-
-function adamantineAbstract(power){
-	adamantineAbPower += (power);
-	ModPE.showTipMessage(ChatColor.RED + "Power:" + adamantineAbPower + "Fuel");
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var SC = {};
-SC.addRecipe = function (item, dat, minPower, out){
-	if(itemHold == item && totalpowStone >= minPower){
-		stoneBurn(item, minPower, out, dat);
-	}
-}
-/*
-0: 25
-1: 150
-2: 175
-3: 250
-4: 475
-5: 600
-6: 800
-*/
-//Add recipes here
-function removepowStone(itemId){
-	SC.addRecipe(266, 0, 175, 2113);//Gold
-	SC.addRecipe(264, 0, 175, 2117);//Iron
-	if(initDusts === true){
-		SC.addRecipe(1908, 0, 600, 2100);//Adamantine
-		SC.addRecipe(1900, 0, 250, 2101);//Angmallen
-		SC.addRecipe(1909, 0, 475, 2102);//Astral Silver
-		SC.addRecipe(1910, 0, 800, 2103);//Atlarus
-		SC.addRecipe(1911, 0, 175, 2104);//Black Steel
-		SC.addRecipe(1924, 0, 175, 2105);//Brass
-		SC.addRecipe(1901, 0, 175, 2106);//Bronze
-		SC.addRecipe(1912, 0, 475, 2107);//Carmot
-		SC.addRecipe(1913, 0, 600, 2108);//Celenegil
-		SC.addRecipe(1902, 0, 150, 2109);//Copper
-		SC.addRecipe(1903, 0, 175, 2110);//Damascus Steel
-		SC.addRecipe(1914, 0, 175, 2111);//Deep Iron
-		SC.addRecipe(1925, 0, 175, 2112);//Electrum
-		SC.addRecipe(1915, 0, 475, 2114);//Haderoth
-		SC.addRecipe(1904, 0, 250, 2115);//Hepatizon
-		SC.addRecipe(1916, 0, 150, 2116);//Infuscolium
-		SC.addRecipe(1905, 0, 175, 2118);//Manganese
-		SC.addRecipe(1917, 0, 475, 2119);//Mithril
-		SC.addRecipe(1919, 0, 600, 2120);//Orichalcum
-		SC.addRecipe(1918, 0, 250, 2121);//Oureclase
-		SC.addRecipe(1926, 0, 250, 2122);//Platinum
-		SC.addRecipe(1920, 0, 175, 2123);//Prometheum
-		SC.addRecipe(1921, 0, 475, 2124);//Quicksilver
-		SC.addRecipe(1922, 0, 250, 2125);//Rubracium
-		SC.addRecipe(1927, 0, 175, 2126);//Silver
-		SC.addRecipe(1906, 0, 250, 2127);//Steel
-		SC.addRecipe(1923, 0, 800, 2128);//Tartarite
-		SC.addRecipe(1907, 0, 150, 2129);//Tin
-		SC.addRecipe(1928, 0, 150, 2130);//Zinc
-}
-
-function addStonePow(item, power, dat){
-	Stonecrusher(power);
-	Player.addItemInventory(item, -1, dat);
-}
-
-function stoneBurn(item, power, dust, dat){
-	Stonecrusher(-power);
-	Item.addItemInventory(item, -1, dat);
-	for(var i = 180; i < 1; i--){
-		if(i == 0){
-			Item.addItemInventory(dust, 2, 0);
-	}
-}
-
-function Stonecrusher(power){
-	totalpowStone+=(power);
-	ModPE.showTipMessage("Fuel:" + totalpowStone + "Power");
-}
-
-
-
-//Copper Crusher
-
-SC.addCopperRecipe = function (item, dat, minPower, out){
-	if(itemHold == item && totalpowCopper >= minPower){
-		copperBurn(item, dat, minPower, out);
-	}
-}
-
-function removeCopperPow(item){
-	SC.addCopperRecipe(266, 0, 175, 2113);//Gold
-	SC.addCopperRecipe(264, 0, 175, 2117);//Iron
-	if(initDusts === true){
-		SC.addCopperRecipe(1908, 0, 600, 2100);//Adamantine
-		SC.addCopperRecipe(1900, 0, 250, 2101);//Angmallen
-		SC.addCopperRecipe(1909, 0, 475, 2102);//Astral Silver
-		SC.addCopperRecipe(1910, 0, 800, 2103);//Atlarus
-		SC.addCopperRecipe(1911, 0, 175, 2104);//Black Steel
-		SC.addCopperRecipe(1924, 0, 175, 2105);//Brass
-		SC.addCopperRecipe(1901, 0, 175, 2106);//Bronze
-		SC.addCopperRecipe(1912, 0, 475, 2107);//Carmot
-		SC.addCopperRecipe(1913, 0, 600, 2108);//Celenegil
-		SC.addCopperRecipe(1902, 0, 150, 2109);//Copper
-		SC.addCopperRecipe(1903, 0, 175, 2110);//Damascus Steel
-		SC.addCopperRecipe(1914, 0, 175, 2111);//Deep Iron
-		SC.addCopperRecipe(1925, 0, 175, 2112);//Electrum
-		SC.addCopperRecipe(1915, 0, 475, 2114);//Haderoth
-		SC.addCopperRecipe(1904, 0, 250, 2115);//Hepatizon
-		SC.addCopperRecipe(1916, 0, 150, 2116);//Infuscolium
-		SC.addCopperRecipe(1905, 0, 175, 2118);//Manganese
-		SC.addCopperRecipe(1917, 0, 475, 2119);//Mithril
-		SC.addCopperRecipe(1919, 0, 600, 2120);//Orichalcum
-		SC.addCopperRecipe(1918, 0, 250, 2121);//Oureclase
-		SC.addCopperRecipe(1926, 0, 250, 2122);//Platinum
-		SC.addCopperRecipe(1920, 0, 175, 2123);//Prometheum
-		SC.addCopperRecipe(1921, 0, 475, 2124);//Quicksilver
-		SC.addCopperRecipe(1922, 0, 250, 2125);//Rubracium
-		SC.addCopperRecipe(1927, 0, 175, 2126);//Silver
-		SC.addCopperRecipe(1906, 0, 250, 2127);//Steel
-		SC.addCopperRecipe(1923, 0, 800, 2128);//Tartarite
-		SC.addCopperRecipe(1907, 0, 150, 2129);//Tin
-		SC.addCopperRecipe(1928, 0, 150, 2130);//Zinc
-}
-
-function addCopperPower(item, power, dat){
-	Coppercrusher(power);
-	Player.addItemInventory(item, -1, dat);
-}
-
-function copperBurn(item, dat, power, out){
-	Player.addItemInventory(item, -1, dat);
-	for(var i = 160; i < 1; i--){
-		if(i == 0){
-			Player.addItemInventory(out, 2, 0);
-			Coppercrusher(-power);
-		}
-	}
-}
-
-function Coppercrusher(power){
-	totalpowCopper+=(power);
-	ModPE.showTipMessage("Fuel" + totalpowCopper + "Power");
-}
-
-//Bronze Crusher
-SC.addBronzeRecipe = function(item, dat, minPower, out){
-	if(itemHold == item && totalpowBronze >= minPower){
-		bronzeBurn(item, dat, minPower, out);
-	}
-}
-
-function removeBronzePow(item){
-	SC.addBronzeRecipe(266, 0, 175, 2113);//Gold
-	SC.addRecipe(264, 0, 175, 2117);//Iron
-	if(initDusts === true){
-		SC.addBronzeRecipe(1908, 0, 600, 2100);//Adamantine
-		SC.addBronzeRecipe(1900, 0, 250, 2101);//Angmallen
-		SC.addBronzeRecipe(1909, 0, 475, 2102);//Astral Silver
-		SC.addBronzeRecipe(1910, 0, 800, 2103);//Atlarus
-		SC.addBronzeRecipe(1911, 0, 175, 2104);//Black Steel
-		SC.addBronzeRecipe(1924, 0, 175, 2105);//Brass
-		SC.addBronzeRecipe(1901, 0, 175, 2106);//Bronze
-		SC.addBronzeRecipe(1912, 0, 475, 2107);//Carmot
-		SC.addBronzeRecipe(1913, 0, 600, 2108);//Celenegil
-		SC.addBronzeRecipe(1902, 0, 150, 2109);//Copper
-		SC.addBronzeRecipe(1903, 0, 175, 2110);//Damascus Steel
-		SC.addBronzeRecipe(1914, 0, 175, 2111);//Deep Iron
-		SC.addBronzeRecipe(1925, 0, 175, 2112);//Electrum
-		SC.addBronzeRecipe(1915, 0, 475, 2114);//Haderoth
-		SC.addBronzeRecipe(1904, 0, 250, 2115);//Hepatizon
-		SC.addBronzeRecipe(1916, 0, 150, 2116);//Infuscolium
-		SC.addBronzeRecipe(1905, 0, 175, 2118);//Manganese
-		SC.addBronzeRecipe(1917, 0, 475, 2119);//Mithril
-		SC.addBronzeRecipe(1919, 0, 600, 2120);//Orichalcum
-		SC.addBronzeRecipe(1918, 0, 250, 2121);//Oureclase
-		SC.addBronzeRecipe(1926, 0, 250, 2122);//Platinum
-		SC.addBronzeRecipe(1920, 0, 175, 2123);//Prometheum
-		SC.addBronzeRecipe(1921, 0, 475, 2124);//Quicksilver
-		SC.addBronzeRecipe(1922, 0, 250, 2125);//Rubracium
-		SC.addBronzeRecipe(1927, 0, 175, 2126);//Silver
-		SC.addBronzeRecipe(1906, 0, 250, 2127);//Steel
-		SC.addBronzeRecipe(1923, 0, 800, 2128);//Tartarite
-		SC.addBronzeRecipe(1907, 0, 150, 2129);//Tin
-		SC.addBronzeRecipe(1928, 0, 150, 2130);//Zinc
-}
-
-function addBronzePower(item, power, dat){
-	Bronzecrusher(power);
-	Player.addItemInventory(item, -1, dat);
-}
-
-function bronzeBurn(item, dat, power, out){
-	Player.addItemInventory(item, -1, dat);
-	for(var i = 120; i < 1; i--){
-		if(i == 0){
-			Player.addItemInventory(out, 2, 0);
-			Bronzecrusher(-power);
-		}
-	}
-}
-
-function Bronzecrusher(power){
-	totalpowBronze+=(power);
-	ModPE.showTipMessage("Fuel" + totalpowBronze + "Power");
-}
-
-//Silver crusher
-SC.addSilverRecipe = function(item, dat, minPower, out){
-	if(itemHold == item && totalpowSilver >= minPower){
-		silverBurn(item, dat, minPower, out);
-	}
-}
-
-function removeSilverPower(item){
-	SC.addSilverRecipe(266, 0, 175, 2113);//Gold
-	SC.addSilverRecipe(264, 0, 175, 2117);//Iron
-	if(initDusts === true){
-		SC.addSilverRecipe(1908, 0, 600, 2100);//Adamantine
-		SC.addSilverRecipe(1900, 0, 250, 2101);//Angmallen
-		SC.addSilverRecipe(1909, 0, 475, 2102);//Astral Silver
-		SC.addSilverRecipe(1910, 0, 800, 2103);//Atlarus
-		SC.addSilverRecipe(1911, 0, 175, 2104);//Black Steel
-		SC.addSilverRecipe(1924, 0, 175, 2105);//Brass
-		SC.addSilverRecipe(1901, 0, 175, 2106);//Bronze
-		SC.addSilverRecipe(1912, 0, 475, 2107);//Carmot
-		SC.addSilverRecipe(1913, 0, 600, 2108);//Celenegil
-		SC.addSilverRecipe(1902, 0, 150, 2109);//Copper
-		SC.addSilverRecipe(1903, 0, 175, 2110);//Damascus Steel
-		SC.addSilverRecipe(1914, 0, 175, 2111);//Deep Iron
-		SC.addSilverRecipe(1925, 0, 175, 2112);//Electrum
-		SC.addSilverRecipe(1915, 0, 475, 2114);//Haderoth
-		SC.addSilverRecipe(1904, 0, 250, 2115);//Hepatizon
-		SC.addSilverRecipe(1916, 0, 150, 2116);//Infuscolium
-		SC.addSilverRecipe(1905, 0, 175, 2118);//Manganese
-		SC.addSilverRecipe(1917, 0, 475, 2119);//Mithril
-		SC.addSilverRecipe(1919, 0, 600, 2120);//Orichalcum
-		SC.addSilverRecipe(1918, 0, 250, 2121);//Oureclase
-		SC.addSilverRecipe(1926, 0, 250, 2122);//Platinum
-		SC.addSilverRecipe(1920, 0, 175, 2123);//Prometheum
-		SC.addSilverRecipe(1921, 0, 475, 2124);//Quicksilver
-		SC.addSilverRecipe(1922, 0, 250, 2125);//Rubracium
-		SC.addSilverRecipe(1927, 0, 175, 2126);//Silver
-		SC.addSilverRecipe(1906, 0, 250, 2127);//Steel
-		SC.addSilverRecipe(1923, 0, 800, 2128);//Tartarite
-		SC.addSilverRecipe(1907, 0, 150, 2129);//Tin
-		SC.addSilverRecipe(1928, 0, 150, 2130);//Zinc
-}
-
-function addSilverPower(item, power, dat){
-	Silvercrusher(power);
-	Player.addItemInventory(item, -1, dat);
-}
-
-function silverBurn(item, dat, power, out){
-	Player.addItemInventory(item, -1, dat);
-	for(var i = 60; i < 1; i--){
-		if(i == 0){
-		Silvercrusher(-power);
-		Player.addItemInventory(out, 2, 0);
-		}
-	}
-}
-
-function Silvercrusher(power){
-	totalpowSilver+=(power);
-	ModPE.showTipMessage("Fuel" + totalpowSilver + "Power");
-}
-
-//Steel crusher
-SC.addSteelRecipe = function (item, dat, minPower, out){
-	if(itemHold == item && totalpowSteel >= minPower){
-		steelBurn(item, dat, minPower, out);
-	}
-}
-
-function removeSteelPower(item){
-	SC.addSteelRecipe(266, 0, 175, 2113);//Gold
-	SC.addSteelRecipe(264, 0, 175, 2117);//Iron
-	if(initDusts === true){
-		SC.addSteelRecipe(1908, 0, 600, 2100);//Adamantine
-		SC.addSteelRecipe(1900, 0, 250, 2101);//Angmallen
-		SC.addSteelRecipe(1909, 0, 475, 2102);//Astral Silver
-		SC.addSteelRecipe(1910, 0, 800, 2103);//Atlarus
-		SC.addSteelRecipe(1911, 0, 175, 2104);//Black Steel
-		SC.addSteelRecipe(1924, 0, 175, 2105);//Brass
-		SC.addSteelRecipe(1901, 0, 175, 2106);//Bronze
-		SC.addSteelRecipe(1912, 0, 475, 2107);//Carmot
-		SC.addSteelRecipe(1913, 0, 600, 2108);//Celenegil
-		SC.addSteelRecipe(1902, 0, 150, 2109);//Copper
-		SC.addSteelRecipe(1903, 0, 175, 2110);//Damascus Steel
-		SC.addSteelRecipe(1914, 0, 175, 2111);//Deep Iron
-		SC.addSteelRecipe(1925, 0, 175, 2112);//Electrum
-		SC.addSteelRecipe(1915, 0, 475, 2114);//Haderoth
-		SC.addSteelRecipe(1904, 0, 250, 2115);//Hepatizon
-		SC.addSteelRecipe(1916, 0, 150, 2116);//Infuscolium
-		SC.addSteelRecipe(1905, 0, 175, 2118);//Manganese
-		SC.addSteelRecipe(1917, 0, 475, 2119);//Mithril
-		SC.addSteelRecipe(1919, 0, 600, 2120);//Orichalcum
-		SC.addSteelRecipe(1918, 0, 250, 2121);//Oureclase
-		SC.addSteelRecipe(1926, 0, 250, 2122);//Platinum
-		SC.addSteelRecipe(1920, 0, 175, 2123);//Prometheum
-		SC.addSteelRecipe(1921, 0, 475, 2124);//Quicksilver
-		SC.addSteelRecipe(1922, 0, 250, 2125);//Rubracium
-		SC.addSteelRecipe(1927, 0, 175, 2126);//Silver
-		SC.addSteelRecipe(1906, 0, 250, 2127);//Steel
-		SC.addSteelRecipe(1923, 0, 800, 2128);//Tartarite
-		SC.addSteelRecipe(1907, 0, 150, 2129);//Tin
-		SC.addSteelRecipe(1928, 0, 150, 2130);//Zinc
-}
-
-function addSteelPower(item, power, dat){
-	steelCrusher(power);
-	Player.addItemInventory(item, -1, dat);
-}
-
-function steelBurn(item, dat, power, out){
-	Player.addItemInventory(item, -1, dat);
-	for(var i = 40; i < 1; i--){
-		if(i == 0){
-			Player.addItemInventory(out, 2, 0);
-			steelCrusher(-power);
-		}
-	}
-}
-
-function steelCrusher(power){
-	totalpowSteel+=(power);
-	ModPE.showTipMessage("Fuel" + totalpowSteel + "Power");
-}
-
-
-var Recipe = {
-	newCrusherRecipe: function(outId, outDat, matOne){
-		Item.addShapedRecipe(outId, 1, outDat, ["mmm", "tit", "tft"], ["m", matOne, 0, "t", 264, 0, "i", 245, 0, "f", 61, 0]);
-	}
-}
-
-function initRecipes(){
-	Item.addShapedRecipe(205, 1, 0, ["ccc", "cmc", "cfc"], ["c", 4, 0, "s", 245, 0, "f", 61, 0]);
-	Recipe.newCrusherRecipe(205, 1, 1902);
-	Recipe.newCrusherRecipe(205, 2, 1901);
-	Recipe.newCrusherRecipe(205, 3, 1927);
-	Recipe.newCrusherRecipe(205, 4, 1906);
-}
 
 function newLevel(){BetterStorage.newLevel();metallurgyCM.newLevel();}
 function modTick(){BetterStorage.modTick();metallurgyCM.modTick();}
 function useItem(x,y,z,itemID,blockID,side,itemDat,blockDat){BetterStorage.useItem(x,y,z,itemID,blockID,side,itemDat,blockDat);metallurgyCM.useItem(x, y, z, itemID, blockID, side, itemDat, blockDat);}
 function destroyBlock(x,y,z,side){BetterStorage.destroyBlock(x,y,z,side);metallurgyCM.destroyBlock(x, y, z, side);}
-
-function leaveGame(){
-	ModPE.saveData(totalpowStone, totalpowCopper, totalpowBronze, totalpowSilver, totalpowSteel);
-}
+function leaveGame(){metallurgyCM.leaveGame();}
 
 //LEAVE EVERYTHING BELOW THIS LINE
 GUI.openInventory=function(){
