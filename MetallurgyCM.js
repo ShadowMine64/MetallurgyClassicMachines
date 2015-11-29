@@ -6,7 +6,6 @@ com.mojang.minecraftpe.MainActivity.currentMainActivity.get().getWindowManager()
 var Inventory={};var BetterStorage={};var GUI={};var storageBlocks={};var invID=null;
 Inventory.defineBlock=function(id,name,texture,materialSourceId,opaque,rendertype,size,isRender){DefineInventory(id,name,texture,materialSourceId,opaque,rendertype,size,isRender);}
 Inventory.setItem=function(id,texture,type,name,stacksize,size){SetInventory(id,texture,type,name,stacksize,size);}
-var initDusts = false;
 //LEAVE EVERYTHING ABOVE THIS LINE
 /*
 Inventory.defineBlock(23,"Storage Block","log",17,false,0,15);	//Define block inventory like this (normal Block.defineBlock but with an extra argument - number of slots)
@@ -80,6 +79,7 @@ Block.defineBlock(196, "mcm_crusher", [["crusher_stone_top",0], ["crusher_stone_
 	["crusher_iron_top",0], ["crusher_iron_top", 0], ["crusher_iron_front", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0],
 	["crusher_steel_top",0], ["crusher_steel_top", 0], ["crusher_steel_front", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0]
 ], 4, false, 0);
+Block.setDestroyTime(196, 1.2);
 Block.setLightOpacity(196, .0001);
 
 //What every machine will need :v
@@ -237,10 +237,6 @@ Player.giveXP = function(xp){
 Player.removeItem = function(id, dat, amount){
 	Player.addItemInventory(id, -amount, dat);
 }
-
-var power = {};
-power.crusher = {};
-power.crusher.stone = 0;
 
 metallurgyCM.newLevel = function(){
 	metallurgyCM.loadStoneCrushers();
@@ -416,6 +412,16 @@ metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDa
 	}
 }
 
+/*
+0: 25
+1: 150
+2: 175
+3: 250
+4: 475
+5: 600
+6: 800
++*/
+
 metallurgyCM.crusher.stone = function(x, y, z, itemId, itemDat){
 	switch(itemId){
 		case 263:
@@ -436,26 +442,52 @@ metallurgyCM.crusher.stone = function(x, y, z, itemId, itemDat){
 metallurgyCM.crusher.recipeStoneHook = function(x, y, z, item, dat){
 	switch(item){
 		case 1908:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1908, 0, 875, 2100, 0);//Adamantine
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1908, 0, 600, 2100, 0);//Adamantine
 			break;
 		case 1900:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1900, 0, 500, 2101, 0);
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1900, 0, 250, 2101, 0);//Angmallen
 			break;
 		case 1909:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1909, 0, 625, 2102, 0);
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1909, 0, 300, 2102, 0);//Astral Silver
 			break;
 		case 1910:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1910, 0, 875, 2103, 0);
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1910, 0, 425, 2103, 0);//Atlarus
 			break;
 		case 1911:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1911, 0, 375, 2104, 0);
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1911, 0, 150, 2104, 0);//Black Steel
+			break;
+		case 1924:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1924, 0, 150, 2105, 0);//Brass
+			break;
+		case 1901:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1901, 0, 150, 2106, 0);//Bronze
+			break;
+		case 1912:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1912, 0, 250, 2107, 0);//Carmot
+			break;
+		case 1913:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1913, 0, 250, 2108, 0);//Celenegil
+			break;
+		case 1902:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1902, 0, 125, 2109, 0)//Copper
+	}
+}
+
+crusher.startStoneDestroy = function(x, y, z){
+	for(var i in crushers.stone){
+		var c = crusher.stone[i];
+		if(c.x == x && c.y == y && c.z == z){
+			if(crusher.getStonePower(x, y, z) > 0){
+				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
+			}
+		}
 	}
 }
 
 metallurgyCM.crusher.stoneTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
 	Player.removeItem(item, dat, 1);
 	if(crusher.getStonePower() >= powerRemove){
-		crusher.removeStonePower(x, y, z, 125)
+		crusher.removeStonePower(x, y, z, powerRemove)
 		for(var i = 180; i <= 0; i--){
 			Level.playSound(x, y, z, "crusher.run", 100, 25);
 			if(i == 0){
@@ -464,12 +496,12 @@ metallurgyCM.crusher.stoneTimer = function(x, y, z, item, dat, powerRemove, out,
 			}
 		}
 	} else {
-		ModPE.showTipMessage(ChatColor.RED + "Not enough power!")
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!");
 	}
 }
 
 metallurgyCM.loadStoneCrushers = function(){
-	var ctx = ModPE.loadFile("crushers.dat");
+	var ctx = ModPE.loadFile("crushersStone.dat");
 	var lines = ctx.split("\n");
 	for(var i = 0; i >= lines.length; i++){
 		var param = lines[i].split(",");
@@ -478,7 +510,7 @@ metallurgyCM.loadStoneCrushers = function(){
 		var z = parseInt(param[2]);
 		var pow = parseFloat(param[3]);
 		for(var e = 0; e >= crushers.stone.length; i++){
-				crushers.stone.push(x:x, y:y, z:z, power:pow);
+				crushers.stone.push({x:x, y:y, z:z, power:pow});
 		}
 	}
 }
@@ -541,23 +573,50 @@ metallurgyCM.crusher.steel = function(x, y, z, itemId, itemDat){
 metallurgyCM.modTick = function(){
 
 }
+metallurgyCM.startDestroyBlock = function(x, y, z){
+	var block = Level.getTile(x, y, z);
+	var data = Level.getData(x, y, z);
+	switch(block){
+		case 196:
+			switch(data){
+				case 0:
+					crushers.startStoneDestroy(x, y, z);
+					break;
+			}
+			break;
+	}
+}
 
 metallurgyCM.destroyBlock = function(x, y, z, side){
+	var block = Level.getTile(x, y, z);
+	var data = Level.getData(x, y, z);
+	switch(block){
+		case 196:
+			switch(data){
+				case 0:
+					for(var i in crushers.stone){
+						var c = crushers.stone[i];
+						if(c.x = x && c.y == y && c.z == z){
+							crushers.stone.splice(i, 1);
+						}
+					}
+					Level.dropItem(x, y, z, 0.5, 196, 1, 0);
+					break;
 
+			}
+	}
 }
 
 metallurgyCM.leaveGame = function(){
 	//Crushers
 	metallurgyCM.saveStoneCrushers();
-	metallurgyCM.saveAbstractors();
-	metallurgyCM.saveSmelters();
-	metallurgyCM.saveFurnaces();
 }
 
 function newLevel(){BetterStorage.newLevel();metallurgyCM.newLevel();}
 function modTick(){BetterStorage.modTick();metallurgyCM.modTick();}
 function useItem(x,y,z,itemID,blockID,side,itemDat,blockDat){BetterStorage.useItem(x,y,z,itemID,blockID,side,itemDat,blockDat);metallurgyCM.useItem(x, y, z, itemID, blockID, side, itemDat, blockDat);}
 function destroyBlock(x,y,z,side){BetterStorage.destroyBlock(x,y,z,side);metallurgyCM.destroyBlock(x, y, z, side);}
+function startDestroyBlock(x,y,z,side){metallurgyCM.startDestroyBlock(x,y,z,side);}
 function leaveGame(){metallurgyCM.leaveGame();}
 
 //LEAVE EVERYTHING BELOW THIS LINE
