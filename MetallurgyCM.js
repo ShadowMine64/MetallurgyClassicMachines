@@ -4,7 +4,7 @@ var chestName;
 var display=new android.util.DisplayMetrics();
 com.mojang.minecraftpe.MainActivity.currentMainActivity.get().getWindowManager().getDefaultDisplay().getMetrics(display);
 var Inventory={};var BetterStorage={};var GUI={};var storageBlocks={};var invID=null;
-Inventory.defineBlock=function(id,name,texture,materialSourceId,opaque,rendertype,size,isRender){DefineInventory(id,name,texture,materialSourceId,opaque,rendertype,size,isRender);}
+Inventory.defineBlock=function(id,name,texture,materialSourceId,opaque,rendertype,size){DefineInventory(id,name,texture,materialSourceId,opaque,rendertype,size);}
 Inventory.setItem=function(id,texture,type,name,stacksize,size){SetInventory(id,texture,type,name,stacksize,size);}
 //LEAVE EVERYTHING ABOVE THIS LINE
 /*
@@ -23,7 +23,7 @@ ModPE.langEdit("item.backpackBrown.name","Backpack");
 //
 //
 
-ModPE.saveFile = function(filename, content) {
+ModPE.saveWorldFile = function(filename, content) {
 	try {
 		java.io.File(android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftWorlds/" + Level.getWorldDir() + "/").mkdirs();
 		var newFile = new java.io.File(android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftWorlds/" + Level.getWorldDir() + "/", filename);
@@ -36,7 +36,7 @@ ModPE.saveFile = function(filename, content) {
 	}
 };
 
-ModPE.loadFile = function(filename) {
+ModPE.loadWorldFile = function(filename) {
 	var content = "";
 	if (java.io.File( android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftWorlds/" + Level.getWorldDir() + "/" + filename).exists()) {
 		var file = new java.io.File(android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftWorlds/" + Level.getWorldDir() + "/" + filename),
@@ -86,6 +86,7 @@ Block.setLightOpacity(196, .0001);
 Block.defineBlock(245, "Machine Frame", ["machine", 0], 4, false, 0);
 Block.setLightOpacity(245, .0001);
 
+/*
 Block.defineBlock(197, "mcm_abstractor", [
 	["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]
 	["abstractor_atlarus_top", 0], ["abstractor_atlarus_bottom", 0], ["abstractor_atlarus_front", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], 
@@ -113,6 +114,7 @@ Block.defineBlock(198, "mcm_abstractor", [
 Block.setLightOpacity(197, .00001);
 Block.setLightOpacity(198, .00001);
 
+*/
 //Base Ingots
 ModPE.setItem(1900, "angmallen_ingot", 0, "Angmallen Ingot");
 ModPE.setItem(1901, "bronze_ingot", 0, "Bronze Ingot");
@@ -194,6 +196,7 @@ ModPE.setDust(2128, "tartarite_dust", 0, "Tartarite Dust", 1923);
 ModPE.setDust(2129, "tin_dust", 0, "Tin Dust", 1907);
 ModPE.setDust(2130, "zinc_dust", 0, "Zinc Dust", 1928);
 
+var crusher = {};
 metallurgyCM = {};
 metallurgyCM.crusher = {};
 metallurgyCM.abstractor = {};
@@ -240,6 +243,11 @@ Player.removeItem = function(id, dat, amount){
 
 metallurgyCM.newLevel = function(){
 	metallurgyCM.loadStoneCrushers();
+	if(Level.getGameMode() == 1){
+		Player.addItemCreativeInv(196, 2, 0);
+	}
+	Player.addItemInventory(196, 64, 0);
+	Player.addItemInventory(263, 64, 0);
 }
 
 metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDat){
@@ -412,16 +420,6 @@ metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDa
 	}
 }
 
-/*
-0: 25
-1: 150
-2: 175
-3: 250
-4: 475
-5: 600
-6: 800
-+*/
-
 metallurgyCM.crusher.stone = function(x, y, z, itemId, itemDat){
 	switch(itemId){
 		case 263:
@@ -442,40 +440,103 @@ metallurgyCM.crusher.stone = function(x, y, z, itemId, itemDat){
 metallurgyCM.crusher.recipeStoneHook = function(x, y, z, item, dat){
 	switch(item){
 		case 1908:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1908, 0, 600, 2100, 0);//Adamantine
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1908, 0, 800, 2100, 0);//Adamantine
 			break;
 		case 1900:
 			metallurgyCM.crusher.stoneTimer(x, y, z, 1900, 0, 250, 2101, 0);//Angmallen
 			break;
 		case 1909:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1909, 0, 300, 2102, 0);//Astral Silver
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1909, 0, 475, 2102, 0);//Astral Silver
 			break;
 		case 1910:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1910, 0, 425, 2103, 0);//Atlarus
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1910, 0, 800, 2103, 0);//Atlarus
 			break;
 		case 1911:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1911, 0, 150, 2104, 0);//Black Steel
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1911, 0, 175, 2104, 0);//Black Steel
 			break;
 		case 1924:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1924, 0, 150, 2105, 0);//Brass
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1924, 0, 175, 2105, 0);//Brass
 			break;
 		case 1901:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1901, 0, 150, 2106, 0);//Bronze
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1901, 0, 175, 2106, 0);//Bronze
 			break;
 		case 1912:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1912, 0, 250, 2107, 0);//Carmot
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1912, 0, 475, 2107, 0);//Carmot
 			break;
 		case 1913:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1913, 0, 250, 2108, 0);//Celenegil
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1913, 0, 600, 2108, 0);//Celenegil
 			break;
 		case 1902:
-			metallurgyCM.crusher.stoneTimer(x, y, z, 1902, 0, 125, 2109, 0)//Copper
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1902, 0, 150, 2109, 0)//Copper
+			break;
+		case 1903:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1903, 0, 175, 2110, 0);//Damscus Steel
+			break;
+		case 1914:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1914, 0, 175, 2111, 0);//Deep Iron
+			break;
+		case 1925:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1925, 0, 175, 2112, 0);//Electrum
+			break;
+		case 266:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 266, 0, 175, 2113, 0);//Gold
+			break;
+		case 1915:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1915, 0, 475, 2114, 0);//Haderoth
+			break;
+		case 1904:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1904, 0, 250, 2115, 0);//Hepatizon
+			break;
+		case 1916:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1916, 0, 150, 2116, 0);//Infuscolium
+			break;
+		case 265:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 265, 0, 175, 2117, 0);//Iron
+			break;
+		case 1905:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1905, 0, 175, 2118, 0);//Manganese
+			break;
+		case 1917:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1917, 0, 475, 2119, 0);//Mithril
+			break;
+		case 1919:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1919, 0, 600, 2120, 0);//Orichalcum
+			break;
+		case 1918:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1918, 0, 250, 2121, 0);//Oureclase
+			break;
+		case 1926:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1926, 0, 250, 2122, 0);//Platinum
+			break;
+		case 1920:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1920, 0, 175, 2123, 0);//Prometheum
+			break;
+		case 1921:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1921, 0, 475, 2124, 0);//Quicksilver
+			break;
+		case 1922:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1922, 0, 250, 2125, 0);//Rubracium
+			break;
+		case 1927:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1927, 0, 175, 2126, 0);//Silver
+			break;
+		case 1906:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1906, 0, 250, 2127, 0);//Steel
+			break;
+		case 1923:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1923, 0, 800, 2128, 0);//Tartarite
+			break;
+		case 1907:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1907, 0, 150, 2129, 0);//Tin
+			break;
+		case 1928:
+			metallurgyCM.crusher.stoneTimer(x, y, z, 1928, 0, 150, 2130, 0);//Zinc
 	}
 }
 
-crusher.startStoneDestroy = function(x, y, z){
+crushers.startStoneDestroy = function(x, y, z){
 	for(var i in crushers.stone){
-		var c = crusher.stone[i];
+		var c = crushers.stone[i];
 		if(c.x == x && c.y == y && c.z == z){
 			if(crusher.getStonePower(x, y, z) > 0){
 				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
@@ -485,13 +546,14 @@ crusher.startStoneDestroy = function(x, y, z){
 }
 
 metallurgyCM.crusher.stoneTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
-	Player.removeItem(item, dat, 1);
-	if(crusher.getStonePower() >= powerRemove){
+	if(crusher.getStonePower(x, y, z) >= powerRemove){
+		var dustDropChance = Math.ceil(Math.random() * 3);
+		Player.removeItem(item, dat, 1);
 		crusher.removeStonePower(x, y, z, powerRemove)
-		for(var i = 180; i <= 0; i--){
+		for(var i = 1800; i >= 0; i--){
 			Level.playSound(x, y, z, "crusher.run", 100, 25);
 			if(i == 0){
-				Level.dropItem(x, y + .25, z, .2, out, 2, outDat);
+				Level.dropItem(x, y + 1.25, z, .2, out, dustDropChance, outDat);
 				Level.playSound(x, y, z, "machine.ding", 100, 25);
 			}
 		}
@@ -501,28 +563,28 @@ metallurgyCM.crusher.stoneTimer = function(x, y, z, item, dat, powerRemove, out,
 }
 
 metallurgyCM.loadStoneCrushers = function(){
-	var ctx = ModPE.loadFile("crushersStone.dat");
-	var lines = ctx.split("\n");
-	for(var i = 0; i >= lines.length; i++){
-		var param = lines[i].split(",");
-		var x = parseInt(param[0]);
-		var y = parseInt(param[1]);
-		var z = parseInt(param[2]);
-		var pow = parseFloat(param[3]);
-		for(var e = 0; e >= crushers.stone.length; i++){
-				crushers.stone.push({x:x, y:y, z:z, power:pow});
+	var content = ModPE.loadWorldFile("stonecrusher.dat");
+	var lines = content.split(";");
+	for(var i=0;i<lines.length;i++){
+		var par = lines[i].split(",");
+		var x = parseInt(par[0]);
+		var y = parseInt(par[1]);
+		var z = parseInt(par[2]);
+		var mB = parseFloat(par[3]);
+		if(x != NaN && y != NaN && z != NaN && mB != NaN){
+			crushers.stone.push({x:x, y:y, z:z, power:mB});
 		}
 	}
 }
 
 metallurgyCM.saveStoneCrushers = function(){
 	var saveStr = "";
-	for(var i = 0; i >= crushers.stone.length; i++){
-		var c = crushers.stone[e];
-		var cal = [c.x, c.y, c.z, c.pow];
-		str += cal.join(",") + "\n";
+	for(var i = 0;i < crushers.stone.length; i++){
+		var c = crushers.stone[i];
+		var crush = [c.x, c.y, c.z, c.power];
+		saveStr += crush.join(",") + ";";
 	}
-	ModPE.saveFile("crushersStone.dat", saveStr);
+	ModPE.saveWorldFile("stonecrusher.dat", saveStr);
 }
 
 crusher.addStonePower = function(x, y, z, powerAmount){
@@ -530,7 +592,7 @@ crusher.addStonePower = function(x, y, z, powerAmount){
 		var c = crushers.stone[i];
 		if(c.x == x && c.y == y && c.z == z){
 			c.power+=(powerAmount);
-			ModPE.showTipMessage(ChatColor.RED + "Power" + c.power + "mB");
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
 		}
 	}
 }
@@ -540,7 +602,7 @@ crusher.removeStonePower = function(x, y, z, powerAmount){
 		var c = crushers.stone[i];
 		if(c.x == x && c.y == y && c.z == z){
 			c.power-=(powerAmount);
-			ModPE.showTipMessage(ChatColor.RED + "Power" + c.power + "mB");
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
 		}
 	}
 }
@@ -558,7 +620,7 @@ metallurgyCM.crusher.copper = function(x, y, z, itemId, itemDat, blockDat){
 
 }
 
-metallurgyCM.crusher.bronze = function(x, y, z, itemId, itemDat);{
+metallurgyCM.crusher.bronze = function(x, y, z, itemId, itemDat){
 
 }
 
@@ -620,6 +682,7 @@ function startDestroyBlock(x,y,z,side){metallurgyCM.startDestroyBlock(x,y,z,side
 function leaveGame(){metallurgyCM.leaveGame();}
 
 //LEAVE EVERYTHING BELOW THIS LINE
+//LEAVE EVERYTHING BELOW THIS LINE
 GUI.openInventory=function(){
 	if(inventoryGUI)
 		return;
@@ -659,8 +722,8 @@ GUI.openInventory=function(){
 				body.setOrientation(android.widget.LinearLayout.HORIZONTAL);
 				body.setBackgroundDrawable(bodyBackground);
 				body.setLayoutParams(new android.widget.LinearLayout.LayoutParams(display.widthPixels,display.heightPixels*(6/7)));
-				//LEFT BODY (mainLayout
-								var leftBody=new android.widget.LinearLayout(activity);
+				//LEFT BODY (mainLayout)
+				var leftBody=new android.widget.LinearLayout(activity);
 				leftBody.setOrientation(android.widget.LinearLayout.HORIZONTAL);
 				leftBody.setLayoutParams(new android.widget.LinearLayout.LayoutParams(display.widthPixels/2,display.heightPixels*(6/7)));
 				leftBody.setGravity(android.view.Gravity.CENTER);
@@ -689,8 +752,8 @@ GUI.openInventory=function(){
 				else leftTopBarText.setShadowLayer(0.0001,Math.round((leftTopBarText.getLineHeight()-4*display.density)/8),Math.round((leftTopBarText.getLineHeight()-4*display.density)/8),android.graphics.Color.parseColor("#FF292929"));
 				//RIGHT TOP BAR TEXT (inventory)
 				var rightTopBarText=new android.widget.TextView(activity);
-				rightTopBarText.setText("Metallurgy Classic Machines");
-				rightTopBarText.setTextSize(14);
+				rightTopBarText.setText("BetterStorage");
+				rightTopBarText.setTextSize(16);
 				rightTopBarText.setTextColor(android.graphics.Color.parseColor("#FFDDDDDD"));
 				rightTopBarText.setTypeface(font);
 				rightTopBarText.setPaintFlags(rightTopBarText.getPaintFlags() | android.graphics.Paint.SUBPIXEL_TEXT_FLAG);
@@ -1120,7 +1183,6 @@ BetterStorage.useItem=function(x,y,z,itemID,blockID,side){
 		if(!inventory[String(invID)])
 			ModPE.setInventory(x,y,z,storageBlocks[blockID]);
 		GUI.openInventory();
-		Level.playSoundEnt(getPlayerEnt(), "random.open", 100, 25);
 		}
 	else if(itemID>255 && storageBlocks[itemID]){
 		preventDefault();
@@ -1170,12 +1232,8 @@ BetterStorage.setInventorySlot=function(x,y,z,slot,id,dmg,amt){
 		inventory[String([x,yz])].items[slot]=[id,dmg,amt];
 	}
 function DefineInventory(id,name,texture,materialSourceId,opaque,rendertype,size){
-	Block.defineBlock(id,name,texture,materialSourceId,opaque,rendertype,isRender);
-	Block.setLightOpacity(id, .0001);
+	Block.defineBlock(id,name,texture,materialSourceId,opaque,rendertype);
 	storageBlocks[id]=size;
-	if(isRender === true){
-		Block.setRenderLayer(id, .0001);
-	}
 	}
 function SetInventory(id,texture,type,name,stacksize,size){
 	ModPE.setItem(id,texture,type,name,stacksize);
