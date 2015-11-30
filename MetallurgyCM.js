@@ -538,7 +538,7 @@ crushers.startStoneDestroy = function(x, y, z){
 	for(var i in crushers.stone){
 		var c = crushers.stone[i];
 		if(c.x == x && c.y == y && c.z == z){
-			if(crusher.getStonePower(x, y, z) > 0){
+			if(crusher.getStonePower(c.x, c.y, c.z) > 0){
 				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
 			}
 		}
