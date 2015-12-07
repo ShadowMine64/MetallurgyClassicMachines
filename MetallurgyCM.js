@@ -23,6 +23,18 @@ ModPE.langEdit("item.backpackBrown.name","Backpack");
 //
 //
 
+Player.setInvSlot = function(slot, id, amount, damage) {
+	net.zhuoweizhang.mcpelauncher.ScriptManager.nativeSetInventorySlot(slot, id, amount, damage);
+};
+
+Player.addItemInv = function(id, count, dat){
+	for(var i = 0; i < 27; i++){
+		if(Player.getInventorySlot(i) == 0){
+			Player.setInvSlot(i, id, count, dat);
+		}
+	}
+}
+
 ModPE.saveWorldFile = function(filename, content) {
 	try {
 		java.io.File(android.os.Environment.getExternalStorageDirectory().getPath() + "/games/com.mojang/minecraftWorlds/" + Level.getWorldDir() + "/").mkdirs();
@@ -52,70 +64,6 @@ ModPE.loadWorldFile = function(filename) {
 	return content;
 };
 
-//Brass Chest
-Inventory.defineBlock(190, "Brass Chest", [["brass_top", 0], ["brass_top", 0], ["brass_front", 0], ["brass_side", 0], ["brass_side", 0], ["brass_side", 0]], 54, false, 0, 54, true);
-Block.setShape(190, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
-
-//Electrum Chest
-Inventory.defineBlock(191, "Electrum Chest", [["electrum_top", 0], ["electrum_top", 0], ["electrum_front", 0], ["electrum_side", 0], ["electrum_side", 0], ["electrum_side", 0]], 54, false, 0, 90, true);
-Block.setShape(191, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
-
-//Gold Chest
-Inventory.defineBlock(192, "Gold Chest", [["gold_top", 0], ["gold_top", 0], ["gold_front", 0], ["gold_side", 0], ["gold_side", 0], ["gold_side", 0]], 54, false, 0, 81, true);
-Block.setShape(192, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
-
-//Platinum Chest
-Inventory.defineBlock(193, "Platinum Chest", [["platinum_top", 0], ["platinum_top", 0], ["platinum_front", 0], ["platinum_side", 0], ["platinum_side", 0], ["platinum_side", 0]], 54, false, 0, 108, true);
-Block.setShape(194, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
-
-//silver Chest
-Inventory.defineBlock(195, "silver Chest", [["silver_top", 0], ["silver_top", 0], ["silver_front", 0], ["silver_side", 0], ["silver_side", 0], ["silver_side", 0]], 54, false, 0, 72, true);
-Block.setShape(195, 1/16, 0, 1/16, 15/16, 14/16, 15/16, 0);
-
-//Crushers
-Block.defineBlock(196, "mcm_crusher", [["crusher_stone_top",0], ["crusher_stone_top", 0], ["crusher_stone_front", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0],
-	["crusher_copper_top",0], ["crusher_copper_top", 0], ["crusher_copper_front", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0],
-	["crusher_bronze_top",0], ["crusher_bronze_top", 0], ["crusher_bronze_front", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0],
-	["crusher_iron_top",0], ["crusher_iron_top", 0], ["crusher_iron_front", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0],
-	["crusher_steel_top",0], ["crusher_steel_top", 0], ["crusher_steel_front", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0]
-], 4, false, 0);
-Block.setDestroyTime(196, 1.2);
-Block.setLightOpacity(196, .0001);
-
-//What every machine will need :v
-Block.defineBlock(245, "Machine Frame", ["machine", 0], 4, false, 0);
-Block.setLightOpacity(245, .0001);
-
-/*
-Block.defineBlock(197, "mcm_abstractor", [
-	["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]
-	["abstractor_atlarus_top", 0], ["abstractor_atlarus_bottom", 0], ["abstractor_atlarus_front", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], 
-	["abstractor_black_steel_top", 0], ["abstractor_black_steel_bottom", 0], ["abstractor_black_steel_front", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], 
-	["abstractor_deep_iron_top", 0], ["abstractor_deep_iron_bottom", 0], ["abstractor_deep_iron_front", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], 
-	["abstractor_haderoth_top", 0], ["abstractor_haderoth_bottom", 0], ["abstractor_haderoth_front", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], 
-	["abstractor_mithril_top", 0], ["abstractor_mithril_bottom", 0], ["abstractor_mithril_front", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], 
-	["abstractor_orichalcum_top", 0], ["abstractor_orichalcum_bottom", 0], ["abstractor_orichalcum_front", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], 
-	["abstractor_oureclase_top", 0], ["abstractor_oureclase_bottom", 0], ["abstractor_oureclase_front", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], 
-	["abstractor_prometheum_top", 0], ["abstractor_prometheum_bottom", 0], ["abstractor_prometheum_front", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], 
-	["abstractor_tartarite_top", 0], ["abstractor_tartarite_bottom", 0], ["abstractor_tartarite_front", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0]
-], 4, false, 0);
-Block.defineBlock(198, "mcm_abstractor", [
-	["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front_on", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0]
-	["abstractor_atlarus_top", 0], ["abstractor_atlarus_bottom", 0], ["abstractor_atlarus_front_on", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], 
-	["abstractor_black_steel_top", 0], ["abstractor_black_steel_bottom", 0], ["abstractor_black_steel_front_on", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], 
-	["abstractor_deep_iron_top", 0], ["abstractor_deep_iron_bottom", 0], ["abstractor_deep_iron_front_on", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], 
-	["abstractor_haderoth_top", 0], ["abstractor_haderoth_bottom", 0], ["abstractor_haderoth_front_on", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], 
-	["abstractor_mithril_top", 0], ["abstractor_mithril_bottom", 0], ["abstractor_mithril_front_on", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], 
-	["abstractor_orichalcum_top", 0], ["abstractor_orichalcum_bottom", 0], ["abstractor_orichalcum_front_on", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], 
-	["abstractor_oureclase_top", 0], ["abstractor_oureclase_bottom", 0], ["abstractor_oureclase_front_on", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], 
-	["abstractor_prometheum_top", 0], ["abstractor_prometheum_bottom", 0], ["abstractor_prometheum_front_on", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], 
-	["abstractor_tartarite_top", 0], ["abstractor_tartarite_bottom", 0], ["abstractor_tartarite_front_on", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0]
-], 4, false, 0);
-Block.setLightOpacity(197, .00001);
-Block.setLightOpacity(198, .00001);
-
-*/
-//Base Ingots
 ModPE.setItem(1900, "angmallen_ingot", 0, "Angmallen Ingot");
 ModPE.setItem(1901, "bronze_ingot", 0, "Bronze Ingot");
 ModPE.setItem(1902, "copper_ingot", 0, "Copper Ingot");
@@ -147,15 +95,6 @@ ModPE.setItem(1925, "electrum_ingot", 0, "Electrum Ingot");
 ModPE.setItem(1926, "platinum_ingot", 0, "Platinum Ingot");
 ModPE.setItem(1927, "silver_ingot", 0, "Silver Ingot");
 ModPE.setItem(1928, "zinc_ingot", 0, "Zinc Ingot");
-
-//Utility Chunks
-ModPE.setItem(1929, "bitumen", 0, "Bitumen");
-ModPE.setItem(1930, "magnesium", 0, "Magnesium Ingot");
-ModPE.setItem(1931, "phosphorus", 0, "Phosphorus");
-ModPE.setItem(1932, "potash", 0, "Potash");
-ModPE.setItem(1933, "saltpeter", 0, "Saltpeter");
-ModPE.setItem(1934, "sulfur", 0, "Sulfur");
-
 
 //Dusts :3
 ModPE.setDust = function(id, texture, dat, name, src){
@@ -196,7 +135,93 @@ ModPE.setDust(2128, "tartarite_dust", 0, "Tartarite Dust", 1923);
 ModPE.setDust(2129, "tin_dust", 0, "Tin Dust", 1907);
 ModPE.setDust(2130, "zinc_dust", 0, "Zinc Dust", 1928);
 
+//Brass Chest
+Inventory.defineBlock(190, "Brass Chest", [
+	["brass_top", 0], ["brass_top", 0], ["brass_side", 0], ["brass_side", 0], ["brass_front", 0], ["brass_side", 0],
+	["brass_top", 0], ["brass_top", 0], ["brass_side", 0], ["brass_side", 0], ["brass_side", 0], ["brass_front", 0],
+	["brass_top", 0], ["brass_top", 0], ["brass_front", 0], ["brass_side", 0],["brass_side", 0], ["brass_side", 0],
+	["brass_top", 0], ["brass_top", 0], ["brass_side", 0], ["brass_front", 0], ["brass_side", 0], ["brass_side", 0]
+], 54, false, 0, 54, true);
+Block.setShape(190, 1/16, 0, 1/16, 15/16, 15/16, 15/16, 0);
+
+//Electrum Chest
+Inventory.defineBlock(191, "Electrum Chest", [["electrum_top", 0], ["electrum_top", 0], ["electrum_side", 0], ["electrum_side", 0], ["electrum_front", 0], ["electrum_side", 0]], 54, false, 0, 90, true);
+Block.setShape(191, 1/16, 0, 1/16, 15/16, 15/16, 15/16, 0);
+
+//Gold Chest
+Inventory.defineBlock(192, "Gold Chest", [["gold_top", 0], ["gold_top", 0], ["gold_side", 0], ["gold_side", 0], ["gold_side", 0], ["gold_front", 0]], 54, false, 0, 81, true);
+Block.setShape(192, 1/16, 0, 1/16, 15/16, 15/16, 15/16, 0);
+
+//Platinum Chest
+Inventory.defineBlock(193, "Platinum Chest", [["platinum_top", 0], ["platinum_top", 0], ["platinum_side", 0], ["platinum_side", 0], ["platinum_front", 0], ["platinum_side", 0]], 54, false, 0, 108, true);
+Block.setShape(193, 1/16, 0, 1/16, 15/16, 15/16, 15/16, 0);
+
+//silver Chest
+Inventory.defineBlock(194, "Silver Chest", [["silver_top", 0], ["silver_top", 0], ["silver_side", 0], ["silver_side", 0], ["silver_front", 0], ["silver_side", 0]], 54, false, 0, 72, true);
+Block.setShape(194, 1/16, 0, 1/16, 15/16, 15/16, 15/16, 0);
+
+//Crushers
+Block.defineBlock(196, "mcm_crusher", [["crusher_stone_top",0], ["crusher_stone_top", 0], ["crusher_stone_front", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0], ["crusher_stone_side", 0],
+	["crusher_copper_top",0], ["crusher_copper_top", 0], ["crusher_copper_side", 0], ["crusher_copper_side", 0], ["crusher_copper_front", 0], ["crusher_copper_side", 0],
+	["crusher_bronze_top",0], ["crusher_bronze_top", 0], ["crusher_bronze_side", 0], ["crusher_bronze_side", 0], ["crusher_bronze_front", 0], ["crusher_bronze_side", 0],
+	["crusher_iron_top",0], ["crusher_iron_top", 0], ["crusher_iron_side", 0], ["crusher_iron_side", 0], ["crusher_iron_front", 0], ["crusher_iron_side", 0], 
+	["crusher_steel_top",0], ["crusher_steel_top", 0], ["crusher_steel_side", 0], ["crusher_steel_side", 0], ["crusher_steel_front", 0], ["crusher_steel_side", 0]
+], 4, false, 0);
+Block.setDestroyTime(196, 1.2);
+Block.setLightOpacity(196, .0001);
+
+//What every machine will need :v
+Block.defineBlock(245, "Machine Frame", ["machine", 0], 4, false, 0);
+Block.setLightOpacity(245, .0001);
+
+Block.defineBlock(197, "Adamantine Abstractor", [
+	["adamantine_top", 0], ["adamantine_bottom", 0], ["adamantine_side", 0], ["adamantine_side", 0], ["adamantine_front", 0], ["adamantine_side", 0]], 4, false, 0);
+Block.setLightOpacity(197, .00001);
+
+Block.defineBlock(199,"Atlarus Abstractor", [
+	["atlarus_top", 0], ["atlarus_bottom", 0], ["atlarus_side", 0], ["atlarus_side", 0], ["atlarus_front", 0], ["atlarus_side", 0]], 4, false, 0);
+Block.setLightOpacity(199, .00001);
+/*
+["black_steel_top", 0], ["black_steel_bottom", 0], ["black_steel_front", 0], ["black_steel_side", 0], ["black_steel_side", 0], ["black_steel_side", 0], 
+["deep_iron_top", 0], ["deep_iron_bottom", 0], ["deep_iron_front", 0], ["deep_iron_side", 0], ["deep_iron_side", 0], ["deep_iron_side", 0], 
+["haderoth_top", 0], ["haderoth_bottom", 0], ["haderoth_front", 0], ["haderoth_side", 0], ["haderoth_side", 0], ["haderoth_side", 0], 
+["mithril_top", 0], ["mithril_bottom", 0], ["mithril_front", 0], ["mithril_side", 0], ["mithril_side", 0], ["mithril_side", 0], 
+["orichalcum_top", 0], ["orichalcum_bottom", 0], ["orichalcum_front", 0], ["orichalcum_side", 0], ["orichalcum_side", 0], ["orichalcum_side", 0], 
+	["oureclase_top", 0], ["oureclase_bottom", 0], ["oureclase_front", 0], ["oureclase_side", 0], ["oureclase_side", 0], ["oureclase_side", 0], 
+	["prometheum_top", 0], ["prometheum_bottom", 0], ["prometheum_front", 0], ["prometheum_side", 0], ["prometheum_side", 0], ["prometheum_side", 0], 
+	["tartarite_top", 0], ["tartarite_bottom", 0], ["tartarite_front", 0], ["tartarite_side", 0], ["tartarite_side", 0], ["tartarite_side", 0]*/
+/*
+Block.defineBlock(198, "mcm_abstractor", [
+	["abstractor_adamantine_top", 0], ["abstractor_adamantine_bottom", 0], ["abstractor_adamantine_front_on", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0], ["abstractor_adamantine_side", 0],
+	["abstractor_atlarus_top", 0], ["abstractor_atlarus_bottom", 0], ["abstractor_atlarus_front_on", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], ["abstractor_atlarus_side", 0], 
+	["abstractor_black_steel_top", 0], ["abstractor_black_steel_bottom", 0], ["abstractor_black_steel_front_on", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], ["abstractor_black_steel_side", 0], 
+	["abstractor_deep_iron_top", 0], ["abstractor_deep_iron_bottom", 0], ["abstractor_deep_iron_front_on", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], ["abstractor_deep_iron_side", 0], 
+	["abstractor_haderoth_top", 0], ["abstractor_haderoth_bottom", 0], ["abstractor_haderoth_front_on", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], ["abstractor_haderoth_side", 0], 
+	["abstractor_mithril_top", 0], ["abstractor_mithril_bottom", 0], ["abstractor_mithril_front_on", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], ["abstractor_mithril_side", 0], 
+	["abstractor_orichalcum_top", 0], ["abstractor_orichalcum_bottom", 0], ["abstractor_orichalcum_front_on", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], ["abstractor_orichalcum_side", 0], 
+	["abstractor_oureclase_top", 0], ["abstractor_oureclase_bottom", 0], ["abstractor_oureclase_front_on", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], ["abstractor_oureclase_side", 0], 
+	["abstractor_prometheum_top", 0], ["abstractor_prometheum_bottom", 0], ["abstractor_prometheum_front_on", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], ["abstractor_prometheum_side", 0], 
+	["abstractor_tartarite_top", 0], ["abstractor_tartarite_bottom", 0], ["abstractor_tartarite_front_on", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0], ["abstractor_tartarite_side", 0]
+], 4, false, 0);*/
+Block.setLightOpacity(197, .00001);
+//Block.setLightOpacity(198, .00001);
+
+//Recipes
+Item.addShapedRecipe(190, 1, 0, ["bbb", "bcb", "bbb"], ["b", 1924, 0, "c", 54, 0]);
+Item.addShapedRecipe(191, 1, 0, ["eee", "ebe", "eee"], ["e", 1925, 0, "b", 192, 0]);
+Item.addShapedRecipe(192, 1, 0, ["ggg", "gsg", "ggg"], ["g", 266, 0, "s", 194, 0]);
+Item.addShapedRecipe(193, 1, 0, ["ppp", "pep", "ppp"], ["p", 1926, 0, "e", 191, 0]);
+Item.addShapedRecipe(194, 1, 0, ["sss", "sbs", "sss"], ["s", 1927, 0, "b", 190, 0]);
+Item.addShapedRecipe(245, 1, 0, ["csc", "sls", "csc"], ["c", 1902, 0, "s", 1906, 0, "c", 4, 0]);//Because cobblestone is lyfe
+Item.addShapedRecipe(196, 1, 0, ["ccc", "cfc", "csc"], ["c", 4, 0, "f", 61, 0, "s", 1906, 0]);
+Item.addShapedRecipe(196, 1, 1, ["ccc", "cmc", "ddd"], ["c", 1902, 0, "m", 196, 0, "d", 2109, 0]);
+Item.addShapedRecipe(196, 1, 2, ["bbb", "bmb", "ddd"], ["b", 1901, 0, "m", 196, 1, "d", 2106, 0]);
+Item.addShapedRecipe(196, 1, 3, ["iii", "ici", "iii"], ["i", 264, 0, "c", 196, 2]);
+Item.addShapedRecipe(196, 1, 4, ["sss", "scs", "sss"], ["s", 1906, 0, "c", 196, 3]);
+
 var crusher = {};
+var abstractor = {};
+abstractor.adamantine = {};
 metallurgyCM = {};
 metallurgyCM.crusher = {};
 metallurgyCM.abstractor = {};
@@ -241,16 +266,88 @@ Player.removeItem = function(id, dat, amount){
 	Player.addItemInventory(id, -amount, dat);
 }
 
-metallurgyCM.newLevel = function(){
-	metallurgyCM.loadStoneCrushers();
-	if(Level.getGameMode() == 1){
-		Player.addItemCreativeInv(196, 2, 0);
-	}
-	Player.addItemInventory(196, 64, 0);
-	Player.addItemInventory(263, 64, 0);
+var expIngots = [];
+
+ModPE.addAbstractorRecipe = function(id, dat, tier){
+	expIngots.push({itemId:id, itemDat:dat, tier:tier});
 }
 
+ModPE.addAbstractorRecipe(1900, 0, 3);
+ModPE.addAbstractorRecipe(1901, 0, 2);
+ModPE.addAbstractorRecipe(1902, 0, 2);
+ModPE.addAbstractorRecipe(1903, 0, 2);
+ModPE.addAbstractorRecipe(1904, 0, 3);
+ModPE.addAbstractorRecipe(1905, 0, 3);
+ModPE.addAbstractorRecipe(1906, 0, 3);
+ModPE.addAbstractorRecipe(1907, 0, 2);
+ModPE.addAbstractorRecipe(1908, 0, 6);
+ModPE.addAbstractorRecipe(1909, 0, 4);
+ModPE.addAbstractorRecipe(1910, 0, 6);
+ModPE.addAbstractorRecipe(1911, 0, 2);
+ModPE.addAbstractorRecipe(1912, 0, 4);
+ModPE.addAbstractorRecipe(1912, 0, 4);
+ModPE.addAbstractorRecipe(1913, 0, 5);
+ModPE.addAbstractorRecipe(1914, 0, 2);
+ModPE.addAbstractorRecipe(1915, 0, 4);
+ModPE.addAbstractorRecipe(1916, 0, 2);
+ModPE.addAbstractorRecipe(1917, 0, 4);
+ModPE.addAbstractorRecipe(1918, 0, 3);
+ModPE.addAbstractorRecipe(1919, 0, 5);
+ModPE.addAbstractorRecipe(1920, 0, 2);
+ModPE.addAbstractorRecipe(1921, 0, 4);
+ModPE.addAbstractorRecipe(1922, 0, 4);
+ModPE.addAbstractorRecipe(1923, 0, 6);
+ModPE.addAbstractorRecipe(1924, 0, 2);
+ModPE.addAbstractorRecipe(1925, 0, 3);
+ModPE.addAbstractorRecipe(1926, 0, 3);
+ModPE.addAbstractorRecipe(1927, 0, 2);
+ModPE.addAbstractorRecipe(1928, 0, 1);
+
+metallurgyCM.newLevel = function(){
+	metallurgyCM.loadStoneCrushers();
+	metallurgyCM.loadCopperCrushers();
+	metallurgyCM.loadBronzeCrushers();
+	metallurgyCM.loadIronCrushers();
+	metallurgyCM.loadSteelCrushers();
+	metallurgyCM.abstractor.loadAdamantine();
+	Player.addItemInventory(190, 1, 0);
+  	Player.addItemInventory(191, 1, 0);
+  	Player.addItemInventory(192, 1, 0);
+  	Player.addItemInventory(193, 1, 0);
+  	Player.addItemInventory(194, 1, 0);
+  	Player.addItemInv(196, 1, 0);
+  	Player.addItemInv(196, 1, 1);
+  	Player.addItemInv(196, 1, 2);
+  	Player.addItemInv(196, 1, 3);
+  	Player.addItemInv(196, 1, 4);
+  	Player.addItemInventory(1923, 64, 0);
+	Player.addItemInventory(197, 5, 0);
+} 
+
 metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDat){
+	if(itemId < 256){
+		Player.addItemInventory(itemId, -1, itemDat);
+		switch(side){
+			case 0:
+				Level.setTile(x, y - 1, z, itemId, itemDat);
+				break;
+			case 1:
+				Level.setTile(x, y + 1, z, itemId, itemDat);
+				break;
+			case 2:
+				Level.setTile(x, y, z - 1, itemId, itemDat);
+				break;
+			case 3:
+				Level.setTile(x, y, z + 1, itemId, itemDat);
+				break;
+			case 4:
+				Level.setTile(x - 1, y, z, itemId, itemDat);
+				break;
+			case 5:
+				Level.setTile(x + 1, y, z, itemId, itemDat);
+				break;
+		}
+	}
 	switch(blockId){
 		case 196:
 			switch(blockDat){
@@ -270,7 +367,14 @@ metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDa
 					metallurgyCM.crusher.steel(x, y, z, itemId, itemDat);
 					break;
 			}
-		break;
+			break;
+		case 197:
+			switch(blockDat){
+				case 0:
+					metallurgyCM.abstractor.adamantine(x, y, z, itemId, itemDat, side);
+					break;
+			}
+			break;
 	}
 	switch(itemId){
 		case 196:
@@ -416,7 +520,40 @@ metallurgyCM.useItem = function(x, y, z, itemId, blockId, side, itemDat, blockDa
 					}
 					break;
 			}
-		break;
+			break;
+		case 197:
+			switch(itemDat){
+				case 0:
+					abstractors.adamantine.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 1:
+					abstractors.atlarus.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 2:
+					abstractors.blackSteel.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 3:
+					abstractors.deepIron.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 4:
+					abstractors.haderoth.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 5:
+					abstractors.mithril.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 6:
+					abstractors.orichalcum.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 7:
+					abstractors.oureclase.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 8:
+					abstractors.prometheum.push({x:x, y:y, z:z, power: 0});
+					break;
+				case 9:
+					abstractors.tartarite.push({x:x, y:y, z:z, power: 0});
+					break;
+			}
 	}
 }
 
@@ -429,8 +566,8 @@ metallurgyCM.crusher.stone = function(x, y, z, itemId, itemDat){
 		case 310:
 			if(itemDat == 10){
 				crusher.addStonePower(x, y, z, 250);
-				Player.removeItem(263, 10, 1);
-				Player.addItemInventory(263, 1, 1);
+				Player.removeItem(310, 10, 1);
+				Player.addItemInventory(310, 0, 1);
 			}
 			break;
 	}
@@ -538,7 +675,7 @@ crushers.startStoneDestroy = function(x, y, z){
 	for(var i in crushers.stone){
 		var c = crushers.stone[i];
 		if(c.x == x && c.y == y && c.z == z){
-			if(crusher.getStonePower(c.x, c.y, c.z) > 0){
+			if(crusher.getStonePower(x, y, z) > 0){
 				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
 			}
 		}
@@ -616,20 +753,910 @@ crusher.getStonePower = function(x, y, z){
 	}
 }
 
-metallurgyCM.crusher.copper = function(x, y, z, itemId, itemDat, blockDat){
-
+metallurgyCM.crusher.bronze = function(x, y, z, itemId, itemDat){
+	switch(itemId){
+		case 263:
+			crusher.addBronzePower(x, y, z, 375);
+			Player.removeItem(263, itemDat, 1);
+			break;
+		case 310:
+			if(itemDat == 10){
+				crusher.addBronzePower(x, y, z, 500);
+				Player.removeItem(263, 10, 1);
+				Player.addItemInventory(263, 1, 1);
+			}
+			break;
+	}
+	metallurgyCM.crusher.recipeBronzeHook(x, y, z, itemId, itemDat);
 }
 
-metallurgyCM.crusher.bronze = function(x, y, z, itemId, itemDat){
+metallurgyCM.crusher.recipeBronzeHook = function(x, y, z, item, dat){
+	switch(item){
+		case 1908:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1908, 0, 800, 2100, 0);//Adamantine
+			break;
+		case 1900:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1900, 0, 250, 2101, 0);//Angmallen
+			break;
+		case 1909:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1909, 0, 475, 2102, 0);//Astral Silver
+			break;
+		case 1910:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1910, 0, 800, 2103, 0);//Atlarus
+			break;
+		case 1911:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1911, 0, 175, 2104, 0);//Black Steel
+			break;
+		case 1924:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1924, 0, 175, 2105, 0);//Brass
+			break;
+		case 1901:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1901, 0, 175, 2106, 0);//Bronze
+			break;
+		case 1912:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1912, 0, 475, 2107, 0);//Carmot
+			break;
+		case 1913:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1913, 0, 600, 2108, 0);//Celenegil
+			break;
+		case 1902:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1902, 0, 150, 2109, 0)//Copper
+			break;
+		case 1903:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1903, 0, 175, 2110, 0);//Damscus Steel
+			break;
+		case 1914:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1914, 0, 175, 2111, 0);//Deep Iron
+			break;
+		case 1925:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1925, 0, 175, 2112, 0);//Electrum
+			break;
+		case 266:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 266, 0, 175, 2113, 0);//Gold
+			break;
+		case 1915:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1915, 0, 475, 2114, 0);//Haderoth
+			break;
+		case 1904:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1904, 0, 250, 2115, 0);//Hepatizon
+			break;
+		case 1916:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1916, 0, 150, 2116, 0);//Infuscolium
+			break;
+		case 265:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 265, 0, 175, 2117, 0);//Iron
+			break;
+		case 1905:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1905, 0, 175, 2118, 0);//Manganese
+			break;
+		case 1917:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1917, 0, 475, 2119, 0);//Mithril
+			break;
+		case 1919:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1919, 0, 600, 2120, 0);//Orichalcum
+			break;
+		case 1918:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1918, 0, 250, 2121, 0);//Oureclase
+			break;
+		case 1926:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1926, 0, 250, 2122, 0);//Platinum
+			break;
+		case 1920:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1920, 0, 175, 2123, 0);//Prometheum
+			break;
+		case 1921:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1921, 0, 475, 2124, 0);//Quicksilver
+			break;
+		case 1922:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1922, 0, 250, 2125, 0);//Rubracium
+			break;
+		case 1927:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1927, 0, 175, 2126, 0);//Silver
+			break;
+		case 1906:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1906, 0, 250, 2127, 0);//Steel
+			break;
+		case 1923:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1923, 0, 800, 2128, 0);//Tartarite
+			break;
+		case 1907:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1907, 0, 150, 2129, 0);//Tin
+			break;
+		case 1928:
+			metallurgyCM.crusher.bronzeTimer(x, y, z, 1928, 0, 150, 2130, 0);//Zinc
+	}
+}
 
+crushers.startBronzeDestroy = function(x, y, z){
+	for(var i in crushers.bronze){
+		var c = crushers.bronze[i];
+		if(c.x == x && c.y == y && c.z == z){
+			if(crusher.getBronzePower(x, y, z) > 0){
+				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
+			}
+		}
+	}
+}
+
+metallurgyCM.crusher.bronzeTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
+	if(crusher.getBronzePower(x, y, z) >= powerRemove){
+		var dustDropChance = Math.ceil(Math.random() * 3);
+		Player.removeItem(item, dat, 1);
+		crusher.removeBronzePower(x, y, z, powerRemove)
+		for(var i = 1200; i >= 0; i--){
+			Level.playSound(x, y, z, "crusher.run", 100, 25);
+			if(i == 0){
+				Level.dropItem(x, y + 1.25, z, .2, out, dustDropChance, outDat);
+				Level.playSound(x, y, z, "machine.ding", 100, 25);
+			}
+		}
+	} else {
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!");
+	}
+}
+
+metallurgyCM.loadBronzeCrushers = function(){
+	var content = ModPE.loadWorldFile("bronzecrusher.dat");
+	var lines = content.split(";");
+	for(var i=0;i<lines.length;i++){
+		var par = lines[i].split(",");
+		var x = parseInt(par[0]);
+		var y = parseInt(par[1]);
+		var z = parseInt(par[2]);
+		var mB = parseFloat(par[3]);
+		if(x != NaN && y != NaN && z != NaN && mB != NaN){
+			crushers.bronze.push({x:x, y:y, z:z, power:mB});
+		}
+	}
+}
+
+metallurgyCM.saveBronzeCrushers = function(){
+	var saveStr = "";
+	for(var i = 0;i < crushers.bronze.length; i++){
+		var c = crushers.bronze[i];
+		var crush = [c.x, c.y, c.z, c.power];
+		saveStr += crush.join(",") + ";";
+	}
+	ModPE.saveWorldFile("bronzecrusher.dat", saveStr);
+}
+
+crusher.addBronzePower = function(x, y, z, powerAmount){
+	for(var i in crushers.bronze){
+		var c = crushers.bronze[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power+=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.removeBronzePower = function(x, y, z, powerAmount){
+	for(var i in crushers.bronze){
+		var c = crushers.bronze[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power-=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.getBronzePower = function(x, y, z){
+	for(var i in crushers.bronze){
+		var c = crushers.bronze[i];
+		if(c.x == x && c.y == y && c.z == z){
+			return c.power;
+		}
+	}
+}
+
+metallurgyCM.crusher.copper = function(x, y, z, itemId, itemDat){
+	switch(itemId){
+		case 263:
+			crusher.addCopperPower(x, y, z, 500);
+			Player.removeItem(263, itemDat, 1);
+			break;
+		case 310:
+			if(itemDat == 10){
+				crusher.addCopperPower(x, y, z, 750);
+				Player.removeItem(263, 10, 1);
+				Player.addItemInventory(263, 1, 1);
+			}
+			break;
+	}
+	metallurgyCM.crusher.recipeCopperHook(x, y, z, itemId, itemDat);
+}
+
+metallurgyCM.crusher.recipeCopperHook = function(x, y, z, item, dat){
+	switch(item){
+		case 1908:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1908, 0, 800, 2100, 0);//Adamantine
+			break;
+		case 1900:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1900, 0, 250, 2101, 0);//Angmallen
+			break;
+		case 1909:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1909, 0, 475, 2102, 0);//Astral Silver
+			break;
+		case 1910:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1910, 0, 800, 2103, 0);//Atlarus
+			break;
+		case 1911:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1911, 0, 175, 2104, 0);//Black Steel
+			break;
+		case 1924:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1924, 0, 175, 2105, 0);//Brass
+			break;
+		case 1901:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1901, 0, 175, 2106, 0);//Bronze
+			break;
+		case 1912:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1912, 0, 475, 2107, 0);//Carmot
+			break;
+		case 1913:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1913, 0, 600, 2108, 0);//Celenegil
+			break;
+		case 1902:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1902, 0, 150, 2109, 0)//Copper
+			break;
+		case 1903:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1903, 0, 175, 2110, 0);//Damscus Steel
+			break;
+		case 1914:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1914, 0, 175, 2111, 0);//Deep Iron
+			break;
+		case 1925:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1925, 0, 175, 2112, 0);//Electrum
+			break;
+		case 266:
+			metallurgyCM.crusher.copperTimer(x, y, z, 266, 0, 175, 2113, 0);//Gold
+			break;
+		case 1915:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1915, 0, 475, 2114, 0);//Haderoth
+			break;
+		case 1904:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1904, 0, 250, 2115, 0);//Hepatizon
+			break;
+		case 1916:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1916, 0, 150, 2116, 0);//Infuscolium
+			break;
+		case 265:
+			metallurgyCM.crusher.copperTimer(x, y, z, 265, 0, 175, 2117, 0);//Iron
+			break;
+		case 1905:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1905, 0, 175, 2118, 0);//Manganese
+			break;
+		case 1917:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1917, 0, 475, 2119, 0);//Mithril
+			break;
+		case 1919:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1919, 0, 600, 2120, 0);//Orichalcum
+			break;
+		case 1918:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1918, 0, 250, 2121, 0);//Oureclase
+			break;
+		case 1926:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1926, 0, 250, 2122, 0);//Platinum
+			break;
+		case 1920:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1920, 0, 175, 2123, 0);//Prometheum
+			break;
+		case 1921:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1921, 0, 475, 2124, 0);//Quicksilver
+			break;
+		case 1922:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1922, 0, 250, 2125, 0);//Rubracium
+			break;
+		case 1927:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1927, 0, 175, 2126, 0);//Silver
+			break;
+		case 1906:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1906, 0, 250, 2127, 0);//Steel
+			break;
+		case 1923:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1923, 0, 800, 2128, 0);//Tartarite
+			break;
+		case 1907:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1907, 0, 150, 2129, 0);//Tin
+			break;
+		case 1928:
+			metallurgyCM.crusher.copperTimer(x, y, z, 1928, 0, 150, 2130, 0);//Zinc
+	}
+}
+
+crushers.startCopperDestroy = function(x, y, z){
+	for(var i in crushers.copper){
+		var c = crushers.copper[i];
+		if(c.x == x && c.y == y && c.z == z){
+			if(crusher.getCopperPower(x, y, z) > 0){
+				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
+			}
+		}
+	}
+}
+
+metallurgyCM.crusher.copperTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
+	if(crusher.getcopperPower(x, y, z) >= powerRemove){
+		var dustDropChance = Math.ceil(Math.random() * 3);
+		Player.removeItem(item, dat, 1);
+		crusher.removeCopperPower(x, y, z, powerRemove)
+		for(var i = 1800; i >= 0; i--){
+			Level.playSound(x, y, z, "crusher.run", 100, 25);
+			if(i == 0){
+				Level.dropItem(x, y + 1.25, z, .2, out, dustDropChance, outDat);
+				Level.playSound(x, y, z, "machine.ding", 100, 25);
+			}
+		}
+	} else {
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!");
+	}
+}
+
+metallurgyCM.loadCopperCrushers = function(){
+	var content = ModPE.loadWorldFile("coppercrusher.dat");
+	var lines = content.split(";");
+	for(var i=0;i<lines.length;i++){
+		var par = lines[i].split(",");
+		var x = parseInt(par[0]);
+		var y = parseInt(par[1]);
+		var z = parseInt(par[2]);
+		var mB = parseFloat(par[3]);
+		if(x != NaN && y != NaN && z != NaN && mB != NaN){
+			crushers.copper.push({x:x, y:y, z:z, power:mB});
+		}
+	}
+}
+
+metallurgyCM.saveCopperCrushers = function(){
+	var saveStr = "";
+	for(var i = 0;i < crushers.copper.length; i++){
+		var c = crushers.copper[i];
+		var crush = [c.x, c.y, c.z, c.power];
+		saveStr += crush.join(",") + ";";
+	}
+	ModPE.saveWorldFile("coppercrusher.dat", saveStr);
+}
+
+crusher.addCopperPower = function(x, y, z, powerAmount){
+	for(var i in crushers.copper){
+		var c = crushers.copper[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power+=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.removeCopperPower = function(x, y, z, powerAmount){
+	for(var i in crushers.copper){
+		var c = crushers.copper[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power-=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.getCopperPower = function(x, y, z){
+	for(var i in crushers.copper){
+		var c = crushers.copper[i];
+		if(c.x == x && c.y == y && c.z == z){
+			return c.power;
+		}
+	}
 }
 
 metallurgyCM.crusher.iron = function(x, y, z, itemId, itemDat){
+	switch(itemId){
+		case 263:
+			crusher.addIronPower(x, y, z, 700);
+			Player.removeItem(263, itemDat, 1);
+			break;
+		case 310:
+			if(itemDat == 10){
+				crusher.addIronPower(x, y, z, 1000);
+				Player.removeItem(263, 10, 1);
+				Player.addItemInventory(263, 1, 1);
+			}
+			break;
+	}
+	metallurgyCM.crusher.recipeIronHook(x, y, z, itemId, itemDat);
+}
 
+metallurgyCM.crusher.recipeIronHook = function(x, y, z, item, dat){
+	switch(item){
+		case 1908:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1908, 0, 800, 2100, 0);//Adamantine
+			break;
+		case 1900:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1900, 0, 250, 2101, 0);//Angmallen
+			break;
+		case 1909:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1909, 0, 475, 2102, 0);//Astral Silver
+			break;
+		case 1910:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1910, 0, 800, 2103, 0);//Atlarus
+			break;
+		case 1911:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1911, 0, 175, 2104, 0);//Black Steel
+			break;
+		case 1924:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1924, 0, 175, 2105, 0);//Brass
+			break;
+		case 1901:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1901, 0, 175, 2106, 0);//Bronze
+			break;
+		case 1912:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1912, 0, 475, 2107, 0);//Carmot
+			break;
+		case 1913:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1913, 0, 600, 2108, 0);//Celenegil
+			break;
+		case 1902:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1902, 0, 150, 2109, 0)//iron
+			break;
+		case 1903:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1903, 0, 175, 2110, 0);//Damscus Steel
+			break;
+		case 1914:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1914, 0, 175, 2111, 0);//Deep Iron
+			break;
+		case 1925:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1925, 0, 175, 2112, 0);//Electrum
+			break;
+		case 266:
+			metallurgyCM.crusher.ironTimer(x, y, z, 266, 0, 175, 2113, 0);//Gold
+			break;
+		case 1915:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1915, 0, 475, 2114, 0);//Haderoth
+			break;
+		case 1904:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1904, 0, 250, 2115, 0);//Hepatizon
+			break;
+		case 1916:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1916, 0, 150, 2116, 0);//Infuscolium
+			break;
+		case 265:
+			metallurgyCM.crusher.ironTimer(x, y, z, 265, 0, 175, 2117, 0);//Iron
+			break;
+		case 1905:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1905, 0, 175, 2118, 0);//Manganese
+			break;
+		case 1917:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1917, 0, 475, 2119, 0);//Mithril
+			break;
+		case 1919:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1919, 0, 600, 2120, 0);//Orichalcum
+			break;
+		case 1918:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1918, 0, 250, 2121, 0);//Oureclase
+			break;
+		case 1926:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1926, 0, 250, 2122, 0);//Platinum
+			break;
+		case 1920:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1920, 0, 175, 2123, 0);//Prometheum
+			break;
+		case 1921:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1921, 0, 475, 2124, 0);//Quicksilver
+			break;
+		case 1922:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1922, 0, 250, 2125, 0);//Rubracium
+			break;
+		case 1927:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1927, 0, 175, 2126, 0);//Silver
+			break;
+		case 1906:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1906, 0, 250, 2127, 0);//Steel
+			break;
+		case 1923:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1923, 0, 800, 2128, 0);//Tartarite
+			break;
+		case 1907:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1907, 0, 150, 2129, 0);//Tin
+			break;
+		case 1928:
+			metallurgyCM.crusher.ironTimer(x, y, z, 1928, 0, 150, 2130, 0);//Zinc
+	}
+}
+
+crushers.startIronDestroy = function(x, y, z){
+	for(var i in crushers.iron){
+		var c = crushers.iron[i];
+		if(c.x == x && c.y == y && c.z == z){
+			if(crusher.getIronPower(x, y, z) > 0){
+				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
+			}
+		}
+	}
+}
+
+metallurgyCM.crusher.ironTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
+	if(crusher.getIronPower(x, y, z) >= powerRemove){
+		var dustDropChance = Math.ceil(Math.random() * 3);
+		Player.removeItem(item, dat, 1);
+		crusher.removeIronPower(x, y, z, powerRemove)
+		for(var i = 1800; i >= 0; i--){
+			Level.playSound(x, y, z, "crusher.run", 100, 25);
+			if(i == 0){
+				Level.dropItem(x, y + 1.25, z, .2, out, dustDropChance, outDat);
+				Level.playSound(x, y, z, "machine.ding", 100, 25);
+			}
+		}
+	} else {
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!");
+	}
+}
+
+metallurgyCM.loadIronCrushers = function(){
+	var content = ModPE.loadWorldFile("ironcrusher.dat");
+	var lines = content.split(";");
+	for(var i=0;i<lines.length;i++){
+		var par = lines[i].split(",");
+		var x = parseInt(par[0]);
+		var y = parseInt(par[1]);
+		var z = parseInt(par[2]);
+		var mB = parseFloat(par[3]);
+		if(x != NaN && y != NaN && z != NaN && mB != NaN){
+			crushers.iron.push({x:x, y:y, z:z, power:mB});
+		}
+	}
+}
+
+metallurgyCM.saveIronCrushers = function(){
+	var saveStr = "";
+	for(var i = 0;i < crushers.iron.length; i++){
+		var c = crushers.iron[i];
+		var crush = [c.x, c.y, c.z, c.power];
+		saveStr += crush.join(",") + ";";
+	}
+	ModPE.saveWorldFile("ironcrusher.dat", saveStr);
+}
+
+crusher.addIronPower = function(x, y, z, powerAmount){
+	for(var i in crushers.iron){
+		var c = crushers.iron[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power+=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.removeIronPower = function(x, y, z, powerAmount){
+	for(var i in crushers.iron){
+		var c = crushers.iron[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power-=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.getIronPower = function(x, y, z){
+	for(var i in crushers.iron){
+		var c = crushers.iron[i];
+		if(c.x == x && c.y == y && c.z == z){
+			return c.power;
+		}
+	}
 }
 
 metallurgyCM.crusher.steel = function(x, y, z, itemId, itemDat){
+	switch(itemId){
+		case 263:
+			crusher.addSteelPower(x, y, z, 700);
+			Player.removeItem(263, itemDat, 1);
+			break;
+		case 310:
+			if(itemDat == 10){
+				crusher.addSteelPower(x, y, z, 1000);
+				Player.removeItem(263, 10, 1);
+				Player.addItemInventory(263, 1, 1);
+			}
+			break;
+	}
+	metallurgyCM.crusher.recipeSteelHook(x, y, z, itemId, itemDat);
+}
 
+metallurgyCM.crusher.recipeSteelHook = function(x, y, z, item, dat){
+	switch(item){
+		case 1908:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1908, 0, 800, 2100, 0);//Adamantine
+			break;
+		case 1900:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1900, 0, 250, 2101, 0);//Angmallen
+			break;
+		case 1909:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1909, 0, 475, 2102, 0);//Astral Silver
+			break;
+		case 1910:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1910, 0, 800, 2103, 0);//Atlarus
+			break;
+		case 1911:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1911, 0, 175, 2104, 0);//Black Steel
+			break;
+		case 1924:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1924, 0, 175, 2105, 0);//Brass
+			break;
+		case 1901:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1901, 0, 175, 2106, 0);//Bronze
+			break;
+		case 1912:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1912, 0, 475, 2107, 0);//Carmot
+			break;
+		case 1913:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1913, 0, 600, 2108, 0);//Celenegil
+			break;
+		case 1902:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1902, 0, 150, 2109, 0)//steel
+			break;
+		case 1903:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1903, 0, 175, 2110, 0);//Damscus Steel
+			break;
+		case 1914:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1914, 0, 175, 2111, 0);//Deep steel
+			break;
+		case 1925:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1925, 0, 175, 2112, 0);//Electrum
+			break;
+		case 266:
+			metallurgyCM.crusher.steelTimer(x, y, z, 266, 0, 175, 2113, 0);//Gold
+			break;
+		case 1915:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1915, 0, 475, 2114, 0);//Haderoth
+			break;
+		case 1904:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1904, 0, 250, 2115, 0);//Hepatizon
+			break;
+		case 1916:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1916, 0, 150, 2116, 0);//Infuscolium
+			break;
+		case 265:
+			metallurgyCM.crusher.steelTimer(x, y, z, 265, 0, 175, 2117, 0);//steel
+			break;
+		case 1905:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1905, 0, 175, 2118, 0);//Manganese
+			break;
+		case 1917:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1917, 0, 475, 2119, 0);//Mithril
+			break;
+		case 1919:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1919, 0, 600, 2120, 0);//Orichalcum
+			break;
+		case 1918:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1918, 0, 250, 2121, 0);//Oureclase
+			break;
+		case 1926:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1926, 0, 250, 2122, 0);//Platinum
+			break;
+		case 1920:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1920, 0, 175, 2123, 0);//Prometheum
+			break;
+		case 1921:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1921, 0, 475, 2124, 0);//Quicksilver
+			break;
+		case 1922:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1922, 0, 250, 2125, 0);//Rubracium
+			break;
+		case 1927:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1927, 0, 175, 2126, 0);//Silver
+			break;
+		case 1906:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1906, 0, 250, 2127, 0);//Steel
+			break;
+		case 1923:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1923, 0, 800, 2128, 0);//Tartarite
+			break;
+		case 1907:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1907, 0, 150, 2129, 0);//Tin
+			break;
+		case 1928:
+			metallurgyCM.crusher.steelTimer(x, y, z, 1928, 0, 150, 2130, 0);//Zinc
+	}
+}
+
+crushers.startSteelDestroy = function(x, y, z){
+	for(var i in crushers.steel){
+		var c = crushers.steel[i];
+		if(c.x == x && c.y == y && c.z == z){
+			if(crusher.getSteelPower(x, y, z) > 0){
+				ModPE.showTipMessage(ChatColor.RED + "WARNING: Breaking the crusher will empty it!")
+			}
+		}
+	}
+}
+
+metallurgyCM.crusher.steelTimer = function(x, y, z, item, dat, powerRemove, out, outDat){
+	if(crusher.getSteelPower(x, y, z) >= powerRemove){
+		var dustDropChance = Math.ceil(Math.random() * 3);
+		Player.removeItem(item, dat, 1);
+		crusher.removeSteelPower(x, y, z, powerRemove)
+		for(var i = 1800; i >= 0; i--){
+			Level.playSound(x, y, z, "crusher.run", 100, 25);
+			if(i == 0){
+				Level.dropItem(x, y + 1.25, z, .2, out, dustDropChance, outDat);
+				Level.playSound(x, y, z, "machine.ding", 100, 25);
+			}
+		}
+	} else {
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!");
+	}
+}
+
+metallurgyCM.loadSteelCrushers = function(){
+	var content = ModPE.loadWorldFile("steelcrusher.dat");
+	var lines = content.split(";");
+	for(var i=0;i<lines.length;i++){
+		var par = lines[i].split(",");
+		var x = parseInt(par[0]);
+		var y = parseInt(par[1]);
+		var z = parseInt(par[2]);
+		var mB = parseFloat(par[3]);
+		if(x != NaN && y != NaN && z != NaN && mB != NaN){
+			crushers.steel.push({x:x, y:y, z:z, power:mB});
+		}
+	}
+}
+
+metallurgyCM.saveSteelCrushers = function(){
+	var saveStr = "";
+	for(var i = 0;i < crushers.steel.length; i++){
+		var c = crushers.steel[i];
+		var crush = [c.x, c.y, c.z, c.power];
+		saveStr += crush.join(",") + ";";
+	}
+	ModPE.saveWorldFile("steelcrusher.dat", saveStr);
+}
+
+crusher.addSteelPower = function(x, y, z, powerAmount){
+	for(var i in crushers.steel){
+		var c = crushers.steel[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power+=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.removeSteelPower = function(x, y, z, powerAmount){
+	for(var i in crushers.steel){
+		var c = crushers.steel[i];
+		if(c.x == x && c.y == y && c.z == z){
+			c.power-=(powerAmount);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + c.power + "mB");
+		}
+	}
+}
+
+crusher.getSteelPower = function(x, y, z){
+	for(var i in crushers.steel){
+		var c = crushers.steel[i];
+		if(c.x == x && c.y == y && c.z == z){
+			return c.power;
+		}
+	}
+}
+
+metallurgyCM.abstractor.adamantine = function(x, y, z, itemId, itemDat, side){
+	switch(itemId){
+		case 263:
+			abstractor.adamantine.addPower(x, y, z, 250);
+			Player.removeItem(263, itemDat, 1);
+			break;
+		case 310:
+			if(itemDat == 10){
+				abstractor.adamantine.addPower(x, y, z, 500);
+				Player.removeItem(310, 10, 1);
+				Player.addItemInventory(310, 0, 1);
+			}
+			break;
+	}
+	metallurgyCM.abstractor.adamantineRecipe(x, y, z, itemId, itemDat);
+}
+
+metallurgyCM.abstractor.adamantineRecipe = function(x, y, z, itemId, itemDat){
+	for(var i in expIngots){
+		var a = expIngots[i];
+		switch(itemId){
+			case a.itemId:
+				switch(itemDat){
+					case a.itemDat:
+						metallurgyCM.abstractor.adamantineTierRecipe(x, y, z, a.itemId, a.itemDat, a.tier);
+					break;
+				}
+			break;
+		}
+	}
+}
+
+metallurgyCM.abstractor.adamantineTierRecipe = function(x, y, z, itemId, itemDat, tier){
+	switch(tier){
+		case 0:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 100, 5);
+			break;
+		case 1:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 175, 10);
+			break;
+		case 2:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 250, 20);
+			break;
+		case 3:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 400, 30);
+			break;
+		case 4:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 500, 40);
+			break;
+		case 5:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 650, 55);
+			break;
+		case 6:
+			metallurgyCM.abstractor.adamantineTimer(x, y, z, itemId, itemDat, 750, 75);
+			break;
+	}
+}
+
+metallurgyCM.abstractor.adamantineTimer = function(x, y, z, itemId, itemDat, powerRemove, outXP){
+	if(abstractor.getAdamantinePower(x, y, z) >= powerRemove){
+		Player.removeItem(itemId, itemDat, 1);
+		abstractor.adamantine.removePower(x, y, z, powerRemove);
+		Player.giveXP(outXP)
+	} else {
+		ModPE.showTipMessage(ChatColor.RED + "Not enough power!");
+	}
+}
+
+metallurgyCM.abstractor.loadAdamantine = function(){
+	var content = ModPE.loadWorldFile("adamantineabstractor.dat");
+	var lines = content.split(";");
+	for(var i = 0; i < lines.length; i++){
+		var par = lines[i].split(",");
+		var x = parseInt(par[0]);
+		var y = parseInt(par[1]);
+		var z = parseInt(par[2]);
+		var mB = parseInt(par[3]);
+		if(x != NaN && y != NaN && z != NaN && mB != NaN){
+			abstractors.adamantine.push({x:x, y:y, z:z, power: mB});
+		}
+	}
+}
+
+metallurgyCM.abstractor.saveAdamantine = function(){
+	var saveStr = "";
+	for(var i = 0; i < abstractors.adamantine.length; i++){
+		var a = abstractors.adamantine[i];
+		var abstract = [a.x, a.y, a.z, a.power];
+		saveStr += abstract.join(",") + ";";
+	}
+	ModPE.saveWorldFile("adamantineabstractor.dat", saveStr);
+}
+
+abstractor.adamantine.addPower = function(x, y, z, power){
+	for(var i in abstractors.adamantine){
+		var a = abstractors.adamantine[i];
+		if(a.x == x && a.y == y && a.z == z){
+			a.power+=(power);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + a.power + "mB");
+		}
+	}
+}
+
+abstractor.adamantine.removePower = function (x, y, z, powerRemove){
+	for(var i in abstractors.adamantine){
+		var a = abstractors.adamantine[i];
+		if(a.x == x && a.y == y && a.z == z){
+			a.power-=(powerRemove);
+			ModPE.showTipMessage(ChatColor.RED + "Power: " + a.power + "mB");
+		}
+	}
+}
+
+abstractor.getAdamantinePower = function(x, y, z){
+	for(var i in abstractors.adamantine){
+		var a = abstractors.adamantine[i];
+		if(a.x == x && a.y == y && a.z == z){
+			return a.power;
+		}
+	}
 }
 
 metallurgyCM.modTick = function(){
@@ -644,6 +1671,17 @@ metallurgyCM.startDestroyBlock = function(x, y, z){
 				case 0:
 					crushers.startStoneDestroy(x, y, z);
 					break;
+				case 1:
+					crushers.startCopperDestroy(x, y, z);
+					break;
+				case 2:
+					crushers.startBronzeDestroy(x, y, z);
+					break;
+				case 3:
+					crushers.startIronDestroy(x, y, z);
+					break;
+				case 4:
+					crushers.startSteelDestroy(x, y, z);
 			}
 			break;
 	}
@@ -664,7 +1702,42 @@ metallurgyCM.destroyBlock = function(x, y, z, side){
 					}
 					Level.dropItem(x, y, z, 0.5, 196, 1, 0);
 					break;
-
+				case 1:
+					for(var i in crushers.copper){
+						var c = crushers.copper[i];
+						if(c.x = x && c.y == y && c.z == z){
+							crushers.copper.splice(i, 1);
+						}
+					}
+					Level.dropItem(x, y, z, 0.5, 196, 1, 1);
+					break;
+				case 2:
+					for(var i in crushers.bronze){
+						var c = crushers.bronze[i];
+						if(c.x = x && c.y == y && c.z == z){
+							crushers.bronze.splice(i, 1);
+						}
+					}
+					Level.dropItem(x, y, z, 0.5, 196, 1, 2);
+					break;
+				case 3:
+					for(var i in crushers.iron){
+						var c = crushers.iron[i];
+						if(c.x = x && c.y == y && c.z == z){
+							crushers.iron.splice(i, 1);
+						}
+					}
+					Level.dropItem(x, y, z, 0.5, 196, 1, 3);
+					break;
+				case 4:
+					for(var i in crushers.steel){
+						var c = crushers.steel[i];
+						if(c.x = x && c.y == y && c.z == z){
+							crushers.steel.splice(i, 1);
+						}
+					}
+					Level.dropItem(x, y, z, 0.5, 196, 1, 4);
+					break;
 			}
 	}
 }
@@ -672,6 +1745,11 @@ metallurgyCM.destroyBlock = function(x, y, z, side){
 metallurgyCM.leaveGame = function(){
 	//Crushers
 	metallurgyCM.saveStoneCrushers();
+	metallurgyCM.saveCopperCrushers();
+	metallurgyCM.saveBronzeCrushers();
+	metallurgyCM.saveIronCrushers();
+	metallurgyCM.saveSteelCrushers();
+	metallurgyCM.abstractor.saveAdamantine();
 }
 
 function newLevel(){BetterStorage.newLevel();metallurgyCM.newLevel();}
