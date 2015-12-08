@@ -1,11 +1,7 @@
 # MetallurgyClassicMachines
 The official port for Metallurgy Classic Machines
 To-do
-- Stone crusher
-- Pretest
-- The other crushers
-- First test 
-- Admantine Abstractor
+
 - Second Test
 - Other Abstractors
 - Ignatius Smelter
